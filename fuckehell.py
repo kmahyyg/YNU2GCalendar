@@ -56,7 +56,7 @@ def getcookie():
         sendlog_my("YNU2GCalendar: Error to focus tab to Classes List")
 
 
-def getclassjson(cookies_dict,term='2017-2018-1',weeknum='1'):
+def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
     url = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do'
     custom_header = {'Host': 'ehall.ynu.edu.cn', 'Connection': 'keep-alive', 'Content-Length': '25', 'Pragma': 'no-cache',
      'Cache-Control': 'no-cache', 'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -73,3 +73,10 @@ def getclassjson(cookies_dict,term='2017-2018-1',weeknum='1'):
     except:
         sendlog_sent()
         sendlog_my("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
+
+
+def getweekclass(cookies,totalweek):
+    lstcls = []
+    for i in range(1, totalweek+1):
+        lstcls.append(getclassjson(cookies, i))
+    return lstcls
