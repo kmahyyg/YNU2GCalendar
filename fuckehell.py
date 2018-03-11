@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 #-*- encoding: utf-8 -*-
 
+# This semester starts from Mar.3
+
 import time
 
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
 from apikey import ynu_ehell_password, ynu_ehell_name
 from sentry import *
 
