@@ -12,10 +12,10 @@ from selenium.webdriver.chrome.options import Options
 from apikey import ynu_ehell_password, ynu_ehell_name
 from sentry import *
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=chrome_options)
-# driver = webdriver.Chrome()
+# chrome_options = Options()
+# chrome_options.add_argument("--headless")
+# driver = webdriver.Chrome(chrome_options=chrome_options)
+driver = webdriver.Chrome()
 
 
 def getcookie():
@@ -24,20 +24,18 @@ def getcookie():
     username.send_keys(ynu_ehell_name)
     passwd = driver.find_element_by_id("password")
     passwd.send_keys(ynu_ehell_password)
-    loginbutton = driver.find_element_by_css_selector('.auth_login_btn.primary.full_width')
+    loginbutton = driver.find_element_by_xpath('//*[@id="casLoginForm"]/p[4]/button')
     loginbutton.submit()
-    time.sleep(3)
-    driver.find_element_by_css_selector('.button.button_ok').click()
-    time.sleep(3)
+    if driver.title == '统一身份认证':
+        driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[2]/input[1]').click()
+        time.sleep(5)
     if driver.title == '统一身份认证平台':
         print('You may need to input the captcha yourself.')
         sendlog_my("YNU2GCalendar: Meet CAPTCHA Test! <REWRITE BURNING!>")
-    else:
-        pass
     if driver.title == '网上办事服务大厅':
+        time.sleep(3)
         availapps = driver.find_element_by_xpath('//*[@id="ampPersonalAsideLeftTabHead"]/div[2]')
         availapps.click()
-        time.sleep(3)
         myclasses = driver.find_element_by_xpath('//*[@id="ampPersonalAsideLeftAllCanUseAppsTabContent"]/div[1]/div[9]')
         currentWindow = driver.current_window_handle
         myclasses.click()
@@ -49,6 +47,7 @@ def getcookie():
         pass
 
     if driver.title == '我的课程表':
+        time.sleep(5)
         cookies_list = driver.get_cookies()
         cookies_dict = {}
         for cookie in cookies_list:
@@ -76,10 +75,4 @@ def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
     except:
         sendlog_sent()
         sendlog_my("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
-
-
-def getweekclass(cookies,totalweek):
-    lstcls = []
-    for i in range(1, totalweek+1):
-        lstcls.append(getclassjson(cookies, i))
-    return lstcls
+        return 254

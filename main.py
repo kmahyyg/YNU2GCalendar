@@ -1,7 +1,7 @@
 # !/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
-from fuckehell import *
+from helljson_proc import *
 from google_oauth import *
 
 
@@ -17,10 +17,6 @@ def check_token_expire(token_time):
     else:
         return 400
 
-
-# Auth from EHELL System and Get JSON
-ehell_cookie = getcookie()
-classes_json = getclassjson(ehell_cookie)
 
 # Auth from Google API
 g_authcode = get_oauth_authcode(gcalapi)
