@@ -22,7 +22,7 @@ def code_vergen():
         codever = ''.join(keyori)
         codeverkey.append(codever)
     codeverify = ''.join(codeverkey)
-    return codeverify
+    return codeverify   # tested
 
 
 def get_oauth_authcode(gapijson):
@@ -41,7 +41,7 @@ def get_oauth_authcode(gapijson):
     print("Already copied auth url, please paste it into your browser")
     authorization_code = input("Paste your authorization code here:")
     time1auth = {'authcode': authorization_code, 'userid': codeveri}
-    return time1auth
+    return time1auth    # tested
 
 
 def get_oauth_token(authcodelst, gapijson):
@@ -63,7 +63,7 @@ def get_oauth_token(authcodelst, gapijson):
     with open('~/.gauthacsYyg', 'w') as authtkn:
         authtkn.write(tokened['access_token'])
         authtkn.close()
-    return tokened
+    return tokened   # tested
 
 
 def f5_oauth_token(refreshtoken, gapijson):
@@ -79,7 +79,7 @@ def f5_oauth_token(refreshtoken, gapijson):
     with open('~/.gauthacsYyg', 'w') as authtkn:
         authtkn.write(tokened['access_token'])
         authtkn.close()
-    return tokened
+    return tokened     # tested
 
 
 def revoke_token():

@@ -36,6 +36,9 @@ def main():
         '''
     choice = input("Choose here: __(1/2/3/4)")
 
+#TODO some test for whether secondary calendar existed or event existed.
+
+
 
 if __name__ == '__main__':
     main()
