@@ -51,10 +51,29 @@ weekscls = []
 
 
 def generate_time(eachcls, weeknum, semstart=semester_start):
+    evnttime = {'start':{'dateTime': '','timeZone': 'Asia/Shanghai'},'end':{'dateTime': '','timeZone': 'Asia/Shanghai'}}
     baseweek = semstart + timedelta(weeks=weeknum-1)
-    start_j = eachcls['KSJC']
-    end_j = eachcls['JSJC']
-    clsday = eachcls['SKXQ']
+    clsday = int(eachcls['SKXQ'])
+    baseday = baseweek + timedelta(days=clsday-1)
+    start_j = int(eachcls['KSJC'])
+    end_j = int(eachcls['JSJC'])
+    period = end_j - start_j
+    if start_j >= 7:
+        basetime = baseday - timedelta(minutes=30,hours=8) + timedelta(hours=14)
+        start_j = start_j - 7
+        if period /2 == 1 and period %2 == 0:
+            basetime = basetime + timedelta(minutes=)
+        elif period /2 == 2 and period %2 == 0:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(hours=3,minutes=40)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period /2 == 0 and period %2 == 1:
+
+        else:
+
+    else:
+
+    return evnttime
 
 
 
@@ -67,9 +86,12 @@ def generate_event(eachclass,weekno):
     if eachclass['YPSJDD'] == None:
         eachclass['YPSJDD'] = '没有详细描述'
     descd = eachclass['SKJS'] + eachclass['YPSJDD']
-    event = {'summary': eachclass['KCM'],
+    eventresc = {'summary': eachclass['KCM'],
              'location': eachclass['JASMC'],
              'description': descd,
              'attendees':[{'email':mailacc}],
              'reminders':{'useDefault': False,'overrides':[{'method':'popup', 'minutes': 30}]}}
     eventtime = generate_time(eachclass,weekno)
+    eventresc['start'] = eventtime['start']
+    eventresc['end'] = eventtime['end']
+    return eventresc

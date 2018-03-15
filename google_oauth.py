@@ -6,6 +6,7 @@ import random
 from urllib.parse import urlencode
 from uuid import uuid1 as uuidgen
 
+import os
 import pyperclip
 import requests
 
@@ -55,12 +56,12 @@ def get_oauth_token(authcodelst, gapijson):
     postdata = urlencode(postdata)
     r = requests.post(tokenurl, data=postdata, headers=header)
     tokened = r.json()
-    with open('~/.gauthYyg', 'w') as authf:
+    with open(os.path.expanduser('~/.gauthYyg'), 'w') as authf:
         f5token = tokened['refresh_token']
         postdata['refresh_token'] = f5token
         authf.write(json.dumps(postdata))
         authf.close()
-    with open('~/.gauthacsYyg', 'w') as authtkn:
+    with open(os.path.expanduser('~/.gauthacsYyg'), 'w') as authtkn:
         authtkn.write(tokened['access_token'])
         authtkn.close()
     return tokened  # tested
@@ -76,14 +77,14 @@ def f5_oauth_token(refreshtoken, gapijson):
     postdata = urlencode(postdata)
     r = requests.post(tokenurl, data=postdata, headers=header)
     tokened = r.json()
-    with open('~/.gauthacsYyg', 'w') as authtkn:
+    with open(os.path.expanduser('~/.gauthacsYyg'), 'w') as authtkn:
         authtkn.write(tokened['access_token'])
         authtkn.close()
     return tokened  # tested
 
 
 def revoke_token():
-    with open('~/.gauthYyg', 'r') as authf:
+    with open(os.path.expanduser('~/.gauthYyg'), 'r') as authf:
         loaded = json.loads(authf.read())
         token = loaded['refresh_token']
         authf.close()

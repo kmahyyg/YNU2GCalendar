@@ -1,14 +1,19 @@
 # !/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
+import time
 from helljson_proc import *
 from google_oauth import *
 from fuckehell import *
 
+# CONSTANT
+token_gettime = None
+# CONSTANT
+
 # Refresh Token Function
 # Before requests sent, always check whether token expired or not, always refresh
 
-def check_token_expire(token_time):
+def check_token_expire(token_time,g_authtoken):
     current_time = int(time.time())
     expiredon = token_time + 3600
     if current_time >= expiredon:
@@ -17,32 +22,42 @@ def check_token_expire(token_time):
     else:
         return 400
 
-
-# Auth from Google API
-g_authcode = get_oauth_authcode(gcalapi)
-g_authtoken = get_oauth_token(g_authcode, gcalapi)
-token_time = int(time.time())
-
-
 # Menu and main function
 
 def main():
     menu = \
         '''
         1. First Time Initialize, Get Auth Credentials
-        2. Import Class from EHELL System
+        2. Import Class from EHELL System and Export to Google Calendar
         3. Revoke Tokens and Exit
         4. Manually Refresh Tokens
         '''
     print(menu)
     choice = input("Choose here: __(1/2/3/4)")
+    totalweeks = input("This semester has __ weeks.")
+    if choice == 3:
+        revoke_token()
+    elif choice == 2:
+        pass #TODO
+    elif choice == 1:
+        g_authcode = get_oauth_authcode(gcalapi)
+        g_authtoken = get_oauth_token(g_authcode, gcalapi)
+        token_gettime = int(time.time())
+    elif choice == 4:
+        if token_gettime == None:
+            print("Please use Option 1 First.")
+        else:
+            refreshcode = check_token_expire(token_gettime,gcalapi)
+            print(refreshcode)
+    else:
+        print("Illegal Input!")
 
 
 # EHALL GET
 
-def dataproc_post(weeknums):
+def dataproc_post(totalweeks):
     sch_ckies = getcookie()
-    for i in range(weeknums+1):
+    for i in range(totalweeks + 1):
         weekclses = getclassjson(sch_ckies,i)
         for cls in weekclses:
             icalevent = generate_event(cls,cls['WEEKNO'])
