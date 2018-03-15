@@ -3,7 +3,7 @@
 
 from helljson_proc import *
 from google_oauth import *
-
+from fuckehell import *
 
 # Refresh Token Function
 # Before requests sent, always check whether token expired or not, always refresh
@@ -34,10 +34,18 @@ def main():
         3. Revoke Tokens and Exit
         4. Manually Refresh Tokens
         '''
+    print(menu)
     choice = input("Choose here: __(1/2/3/4)")
 
-#TODO some test for whether secondary calendar existed or event existed.
 
+# EHALL GET
+
+def dataproc_post(weeknums):
+    sch_ckies = getcookie()
+    for i in range(weeknums+1):
+        weekclses = getclassjson(sch_ckies,i)
+        for cls in weekclses:
+            icalevent = generate_event(cls,cls['WEEKNO'])
 
 
 if __name__ == '__main__':

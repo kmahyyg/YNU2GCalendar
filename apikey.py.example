@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-#-*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
+
+from datetime import datetime
 
 gcalcpi = {}  # download from google api: called apisecret.json and only remains datas part
 gcalcpi_scope = 'https://www.googleapis.com/auth/calendar'
-sentryid = ''    # sentry bugtracker dsn key
+sentryid = ''  # sentry bugtracker dsn key
 ynu_ehell_name = ''  # student id
 ynu_ehell_password = ''  # ehall system passwd
-apiauthmtd = 'Bearer'  # header: Authorization: Bearer ACCESSTOKEN
+semester_start = datetime(2018, 3, 5, 8, 30, 0)  # Semester starts from
+mailacc = 'example@example.com'  # Mail Account associated with Google Calendar
