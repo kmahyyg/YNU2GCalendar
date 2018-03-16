@@ -50,26 +50,36 @@ import json
 weekscls = []
 
 
+
 def generate_time(eachcls, weeknum, semstart=semester_start):
     evnttime = {'start':{'dateTime': '','timeZone': 'Asia/Shanghai'},'end':{'dateTime': '','timeZone': 'Asia/Shanghai'}}
     baseweek = semstart + timedelta(weeks=weeknum-1)
     clsday = int(eachcls['SKXQ'])
     baseday = baseweek + timedelta(days=clsday-1)
-    start_j = int(eachcls['KSJC'])
-    end_j = int(eachcls['JSJC'])
+    start_j = int(eachcls['KSJC'])    # included
+    end_j = int(eachcls['JSJC'])      # included
     period = end_j - start_j
-    if start_j >= 7:
-        basetime = baseday - timedelta(minutes=30,hours=8) + timedelta(hours=14)
-        start_j = start_j - 7
-        if period /2 == 1 and period %2 == 0:
+    # School Schedule Timetable
+    # 1-4 Morning {8:30-10:10,10:30-12:10} 20MINS2REST
+    # 5-8 Afternoon {14:00-15:40,16:00-17:40}
+    # 9-10 Evening {19:00-20:40}
+    # School Schedule Timetable
+    if start_j >= 5:
+        # The classes in school has two forms in time: 45mins*2 / 45mins*3 / 45mins*4
+        basetime = baseday + timedelta(hours=14)
+        start_j = start_j - 5
+        if period == 1:
             basetime = basetime + timedelta(minutes=)
-        elif period /2 == 2 and period %2 == 0:
+        elif period
             evnttime['start']['datetime'] = str(basetime.isoformat())
             endtime = basetime + timedelta(hours=3,minutes=40)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
-        elif period /2 == 0 and period %2 == 1:
+        elif period
 
         else:
+
+    elif start_j >=9:
+
 
     else:
 

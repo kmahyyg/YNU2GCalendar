@@ -59,8 +59,9 @@ def dataproc_post(totalweeks):
     sch_ckies = getcookie()
     for i in range(totalweeks + 1):
         weekclses = getclassjson(sch_ckies,i)
-        for cls in weekclses:
-            icalevent = generate_event(cls,cls['WEEKNO'])
+        allcls = weekclses['rows']
+        for cls in allcls:
+            icalevent = generate_event(cls,i)
 
 
 if __name__ == '__main__':

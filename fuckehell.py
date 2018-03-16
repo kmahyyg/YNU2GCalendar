@@ -73,9 +73,9 @@ def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
     r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict)
     try:
         classes = r.json()
-        classes['datas']['xskcb']['rows']['WEEKNO'] = weeknum
+        classes['datas']['xskcb']['WEEKNO']= weeknum
         if classes['code'] == '0':
-            return classes['datas']['xskcb']['rows']
+            return classes['datas']['xskcb']
         else:
             return sendlog_my("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
     except:
