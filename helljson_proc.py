@@ -64,25 +64,69 @@ def generate_time(eachcls, weeknum, semstart=semester_start):
     # 5-8 Afternoon {14:00-15:40,16:00-17:40}
     # 9-10 Evening {19:00-20:40}
     # School Schedule Timetable
-    if start_j >= 5:
+    if start_j >= 5:     # afternoon
         # The classes in school has two forms in time: 45mins*2 / 45mins*3 / 45mins*4
         basetime = baseday + timedelta(hours=14)
         start_j = start_j - 5
-        if period == 1:
-            basetime = basetime + timedelta(minutes=)
-        elif period
+        if period == 1 and start_j == 0:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 1 and start_j == 2:
+            basetime = basetime + timedelta(minutes=120)
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 3:
             evnttime['start']['datetime'] = str(basetime.isoformat())
             endtime = basetime + timedelta(hours=3,minutes=40)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
-        elif period
-
+        elif period == 2 and start_j == 0:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=45*3+20)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 2 and start_j == 1:
+            basetime = basetime +timedelta(minutes=55)
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=45*3+20)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
         else:
-
-    elif start_j >=9:
-
-
-    else:
-
+            sendlog_my(json.dumps(eachcls) + 'Import Failed!')
+    elif start_j ==9:    # evening
+        basetime = baseday + timedelta(hours=19)
+        evnttime['start']['datetime'] = str(basetime.isoformat())
+        endtime = basetime + timedelta(minutes=100)
+        evnttime['end']['dateTime'] = str(endtime.isoformat())
+    else:    # morning
+        basetime = baseday + timedelta(hours=8,minutes=30)
+        start_j = start_j - 1
+        if period == 1 and start_j ==0:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 1 and start_j == 1:
+            basetime = basetime + timedelta(minutes=55)
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 1 and start_j == 2:
+            basetime = basetime + timedelta(minutes=120)
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 2 and start_j == 0:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=155)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        elif period == 2 and start_j == 1:
+            basetime = basetime + timedelta(minutes=55)
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(minutes=100)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
+        else:
+            evnttime['start']['datetime'] = str(basetime.isoformat())
+            endtime = basetime + timedelta(hours=3,minutes=40)
+            evnttime['end']['dateTime'] = str(endtime.isoformat())
     return evnttime
 
 
