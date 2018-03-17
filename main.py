@@ -5,9 +5,12 @@ import time
 from helljson_proc import *
 from google_oauth import *
 from fuckehell import *
+from gcalendar import *
 
 # CONSTANT
 token_gettime = None
+g_authtoken = ''
+is_ynu_exist = 0
 # CONSTANT
 
 # Refresh Token Function
@@ -38,7 +41,10 @@ def main():
     if choice == 3:
         revoke_token()
     elif choice == 2:
-        pass #TODO
+        seccalid = getSeccalLst(g_authtoken['access_token'])
+        if seccalid == None or isinstance(seccalid,int):
+            seccalid = createSecCal(g_authtoken['access_token'],seccalid)['id']
+        dataproc_post(totalweeks)
     elif choice == 1:
         g_authcode = get_oauth_authcode(gcalapi)
         g_authtoken = get_oauth_token(g_authcode, gcalapi)
@@ -62,6 +68,9 @@ def dataproc_post(totalweeks):
         allcls = weekclses['rows']
         for cls in allcls:
             icalevent = generate_event(cls,i)
+            createCalEvent(g_authtoken['access_token'],seccalid,icalevent)
+            print("createCalEvent 1.")
+    return 0
 
 
 if __name__ == '__main__':

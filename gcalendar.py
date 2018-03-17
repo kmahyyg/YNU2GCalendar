@@ -15,7 +15,7 @@ def getSeccalLst(acstoken):
     url = base + query
     r = requests.get(url=url, headers=header)
     resp = r.json()
-    STATUS_YNUEXIST = 0
+    STATUS_YNUEXIST = None
     print('-------------------------')
     print('All Secondary Calendars here:')
     for calends in resp['items']:
@@ -23,15 +23,17 @@ def getSeccalLst(acstoken):
             pass
         else:
             STATUS_YNUEXIST = 1
+            return calends['id']
         print(calends['summary'])
     print('-------------------------')
+    STATUS_YNUEXIST = 0
     return STATUS_YNUEXIST
 
     # background hex color code: f4426e
 
 
 def createSecCal(acstoken, status_ynuexist):
-    if status_ynuexist == 1:
+    if status_ynuexist == None:
         return print("YNU Secondary Calendars already exists.")
     httpauth = "Bearer " + acstoken
     header = {"Authorization": httpauth}
