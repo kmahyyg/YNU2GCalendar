@@ -4,7 +4,7 @@ node_modules/
 package*.json
 .idea/
 .yygapi
-apikey.py
+server_side/apikey.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
