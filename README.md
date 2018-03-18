@@ -45,7 +45,8 @@ Licensed under AGPL V3.0
 # Installation and Deployment
 
 Clone this repo to wherever you want first.
-Don't forget to modify apikey.py.example first
+Don't forget to modify apikey.py.example first.
+Register a Google Calendar API first. It's free to use.
 
 > **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
 
@@ -76,3 +77,7 @@ please SHARE YOUR LOG via [Pastebin](http://pastebin.ubuntu.com) or [Hastebin](h
  
 If you don't follow those rules, your issue will get **no response and closed directly**.
 I will **NOT** receive(also reply) any request via any IM or Email.
+
+#### BTW
+
+Google has a very strong standard applied. While I'm programming for this, It all followed the corresponding international standard.

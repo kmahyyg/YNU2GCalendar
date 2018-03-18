@@ -108,3 +108,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+/client_side/apikey.py
+/server_side/apikey.py

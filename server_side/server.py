@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 #-*- encoding: utf-8 -*-
 
+print('You must accept this disclaimer first: https://github.com/kmahyyg/YNU2GCalendar#disclaimer')
 # the server must process the json uploaded by the user and submit it to google server
 
 def dataproc_post(totalweeks):
