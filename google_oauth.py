@@ -7,7 +7,6 @@ from urllib.parse import urlencode
 from uuid import uuid1 as uuidgen
 
 import os
-import pyperclip
 import requests
 
 from apikey import *
@@ -38,8 +37,13 @@ def get_oauth_authcode(gapijson):
                 "response_type": "code", "redirect_uri": redirect_uri}
     querystr = urlencode(querystr)
     urlcopy = auth_base_url + querystr
-    pyperclip.copy(urlcopy)
-    print("Already copied auth url, please paste it into your browser")
+    print('\n')
+    print('-----------------------------------------------------------')
+    print(urlcopy)
+    print('-----------------------------------------------------------')
+    print("Auth url has been shown above, please paste it into your browser")
+    print('-----------------------------------------------------------')
+    print('\n')
     authorization_code = input("Paste your authorization code here:")
     time1auth = {'authcode': authorization_code, 'userid': codeveri}
     return time1auth  # tested
@@ -57,6 +61,9 @@ def get_oauth_token(authcodelst, gapijson):
     r = requests.post(tokenurl, data=postdata, headers=header)
     tokened = r.json()
     with open(os.path.expanduser('~/.gauthYyg'), 'w') as authf:
+        postdata = {"code": authcodelst['authcode'], "client_id": clientid, "client_secret": clientscrt,
+                    "redirect_uri": gapijson['redirect_uris'][0], "grant_type": "authorization_code",
+                    "code_verifier": authcodelst['userid']}
         f5token = tokened['refresh_token']
         postdata['refresh_token'] = f5token
         authf.write(json.dumps(postdata))

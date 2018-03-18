@@ -38,18 +38,18 @@ def main():
     print(menu)
     choice = input("Choose here: __(1/2/3/4)")
     totalweeks = input("This semester has __ weeks.")
-    if choice == 3:
+    if choice == '3':
         revoke_token()
-    elif choice == 2:
+    elif choice == '2':
         seccalid = getSeccalLst(g_authtoken['access_token'])
         if seccalid == None or isinstance(seccalid,int):
             seccalid = createSecCal(g_authtoken['access_token'],seccalid)['id']
         dataproc_post(totalweeks)
-    elif choice == 1:
+    elif choice == '1':
         g_authcode = get_oauth_authcode(gcalapi)
         g_authtoken = get_oauth_token(g_authcode, gcalapi)
         token_gettime = int(time.time())
-    elif choice == 4:
+    elif choice == '4':
         if token_gettime == None:
             print("Please use Option 1 First.")
         else:
