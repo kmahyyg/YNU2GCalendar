@@ -72,7 +72,7 @@ nohup python3 ./server.py > /dev/null 2>&1 &
 LOGCAT OR GTFO!
 
 Provide all of your logs and submit it via Issues. If the file is too large(or you cannot identify which is related one),
-please SHARE YOUR LOG via [Pastebin](http://pastebin.ubuntu.com) or [Hastebin](http://hastebin.net).
+please SHARE YOUR LOG via [Pastebin](http://pastebin.ubuntu.com) or [Hastebin](http://hastebin.com).
  
 If you don't follow those rules, your issue will get **no response and closed directly**.
 I will **NOT** receive(also reply) any request via any IM or Email.
