@@ -9,8 +9,8 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from apikey import ynu_ehell_password, ynu_ehell_name
-from sentry import *
+from .apikey import *
+from .sentry import *
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")

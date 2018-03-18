@@ -5,6 +5,7 @@ package*.json
 .idea/
 .yygapi
 server_side/apikey.py
+client_side/apikey.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -3,7 +3,7 @@
 
 import json
 
-from sentry import *
+from .sentry import *
 import requests
 
 

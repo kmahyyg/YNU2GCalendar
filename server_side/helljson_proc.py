@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
-from apikey import semester_start,mailacc
-from sentry import *
+from .apikey import semester_start,mailacc
+from .sentry import *
 from datetime import *
 import json
 
