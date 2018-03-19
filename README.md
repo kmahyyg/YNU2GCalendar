@@ -65,6 +65,14 @@ python3 ./main.py
 pip install -r ./requirements.txt
 cd server_side
 cp ./apikey.py.example ./apikey.py
+# Update APT Source and install certbot to issue a SSL Cert
+sudo apt-get update -y
+sudo apt-get install certbot
+sudo certbot certonly --standalone
+# Now, you have a brand new SSL Cert issued by Let's encrypt
+sudo mkdir /root/letsssl
+sudo cp /etc/letsencrypt/live/yourdomain.com/fullchain.pem /root/letsssl/
+sudo cp /etc/letsencrypt/live/yourdomain.com/privkey.pem /root/letsssl/
 nohup python3 ./server.py > /dev/null 2>&1 &
 ```
 

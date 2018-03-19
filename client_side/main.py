@@ -30,7 +30,8 @@ def postCourseToServ(coursejson):
 
 
 def postNumToServ(num):
-    r = requests.post(url='https://ehall.55aiguo.xyz/api/v1/tlweek',data=num)
+    payload = {'data':num}
+    r = requests.get(url='https://ehall.55aiguo.xyz/api/v1/tlweek',params=payload)
     resp = r.json()
     return resp
 
