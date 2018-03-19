@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-#-*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 gcalapi = {}  # API Secret JSON downloaded from Google, its data part
 
 gcalapi_scope = 'https://www.googleapis.com/auth/calendar'  # Don't modify
 sentryid = 'https://43b3b4ea4f724fda919fdfc7af178a25:d3ba0a16090041b592701abb106da138@sentry.io/297885'  # Don't modify
 ynu_ehell_name = ''  # Your EHALL SYSTEM Username
-ynu_ehell_password = ''   # Your EHALL SYSTEM Password
+ynu_ehell_password = ''  # Your EHALL SYSTEM Password

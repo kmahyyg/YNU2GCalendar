@@ -12,10 +12,10 @@ from selenium.webdriver.chrome.options import Options
 from .apikey import *
 from .sentry import *
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=chrome_options)
-# driver = webdriver.Chrome()
+# chrome_options = Options()
+# chrome_options.add_argument("--headless")
+# driver = webdriver.Chrome(chrome_options=chrome_options)
+driver = webdriver.Chrome()
 
 
 def getcookie():
@@ -37,7 +37,8 @@ def getcookie():
         time.sleep(8)
         availapps = driver.find_element_by_xpath('//*[@id="ampPersonalAsideLeftTabHead"]/div[2]')
         availapps.click()
-        myclasses = driver.find_element_by_xpath('//*[@id="ampPersonalAsideLeftAllCanUseAppsTabContent"]/div[1]/div[9]')
+        myclasses = driver.find_element_by_xpath(
+            '//*[@id="ampPersonalAsideLeftAllCanUseAppsTabContent"]/div[1]/div[10]')  # may be changed in the future
         currentWindow = driver.current_window_handle
         myclasses.click()
         for handle in driver.window_handles:
@@ -73,7 +74,7 @@ def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
     r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict)
     try:
         classes = r.json()
-        classes['datas']['xskcb']['WEEKNO']= weeknum
+        classes['datas']['xskcb']['WEEKNO'] = weeknum
         if classes['code'] == '0':
             return classes['datas']['xskcb']
         else:

@@ -5,32 +5,72 @@ print('You must accept this disclaimer first: https://github.com/kmahyyg/YNU2GCa
 input("Accept? Press any key to continue.")
 # the server must process the json uploaded by the user and submit it to google server
 
-from flask import Flask, abort, jsonify, request, json
+
+from flask import Flask, abort, jsonify, request
 import json
+from time import *
+from .google_oauth import *
+from .helljson_proc import *
+from .sentry import *
+from .gcalendar import *
 
 app = Flask(__name__)
 
-# Constant
-totalweek = 1
-# Constant
+# Constant Predefine
+current_week = 1
+gauth_acstoken = ''
+gauth_reftoken = ''
+gauth_oauthtoken = ''
+acstokentime = 0
 
 
-@app.route('/api/v1/gauth',methods=['POST'])
+# Constant Predefined
+
+
+@app.route('/api/v1/gauth', methods=['POST'])
 def procGauth():
-    gauth_authcode = request.get_json()
-    return 0
+    try:
+        gauth_authcode = request.get_json()
+        gauth_oauthtoken = get_oauth_token(gauth_authcode['authcode'], gcalapi)
+        gauth_reftoken = gauth_oauthtoken['refresh_token']
+        gauth_acstoken = gauth_oauthtoken['access_token']
+        acstokentime = int(time.time())
+        return jsonify({"code": 0, "bmsg": "Request successfully processed."})
+    except:
+        sendlog_sent()
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
 
-@app.route('/api/v1/courses',methods=['POST'])
-def procCourses():
-    pass
 
-
-@app.route('/api/v1/tlweek',methods=['GET'])
+@app.route('/api/v1/curweek', methods=['GET'])
 def procWeeks():
-    totalweek = int(request.args.get('data'))
-    return jsonify({"code":0,"bmsg":"200 Total Weeks OK"})
+    try:
+        current_week = int(request.args.get('data'))
+        return jsonify({"code": 0, "bmsg": "200 Current Week OK"})
+    except:
+        sendlog_sent()
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
+
+
+@app.route('/api/v1/courses', methods=['POST'])
+def procCourses():
+    try:
+        echwekcurs = request.get_json()
+        current_week_cls = echwekcurs['rows']
+        clsnums = len(current_week_cls)
+        checkSec = getSeccalLst(gauth_acstoken)
+        seccalid = createSecCal(gauth_acstoken, checkSec)['id']
+        for i in range(0, clsnums + 1):
+            evnt = generate_event(current_week_cls[i], current_week)
+            createCalEvent(gauth_acstoken, seccalid, evnt)
+        return jsonify({"code": 0, "bmsg": "200 Courses data in this week proceeded."})
+    except:
+        sendlog_sent()
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
 
 
 if __name__ == '__main__':
-    sslcont = ('/root/letsssl/fullchain.pem', '/root/letsssl/privkey.pem')
-    app.run(host='0.0.0.0', debug=True, port=443, ssl_context=sslcont)
+    try:
+        sslcont = ('/root/letsssl/fullchain.pem', '/root/letsssl/privkey.pem')
+        app.run(host='0.0.0.0', debug=True, port=443, ssl_context=sslcont)
+    except:
+        sendlog_sent()

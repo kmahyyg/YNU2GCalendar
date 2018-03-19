@@ -9,7 +9,8 @@ import requests
 
 from .apikey import *
 
-def check_token_expire(token_time,g_authtoken):
+
+def check_token_expire(token_time, g_authtoken):
     current_time = int(time.time())
     expiredon = token_time + 3600
     if current_time >= expiredon:

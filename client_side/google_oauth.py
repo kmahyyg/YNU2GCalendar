@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-#-*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 import random
 from uuid import uuid1 as uuidgen
 from urllib.parse import urlencode
 from .apikey import *
+
 
 def code_vergen():
     seq1 = ['q', 'w''f', 'p', 'g', 'j', 'l', 'u', 'y', '-', '.', '_', '~',

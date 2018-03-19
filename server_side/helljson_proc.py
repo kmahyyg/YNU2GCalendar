@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
-from .apikey import semester_start,mailacc
+from .apikey import semester_start, mailacc
 from .sentry import *
 from datetime import *
 import json
-
 
 # Firstly, Judge whether resp['code']=='0'
 # Then request one week per time, after that process to defined format.
@@ -50,21 +49,21 @@ import json
 weekscls = []
 
 
-
 def generate_time(eachcls, weeknum, semstart=semester_start):
-    evnttime = {'start':{'dateTime': '','timeZone': 'Asia/Shanghai'},'end':{'dateTime': '','timeZone': 'Asia/Shanghai'}}
-    baseweek = semstart + timedelta(weeks=weeknum-1)
+    evnttime = {'start': {'dateTime': '', 'timeZone': 'Asia/Shanghai'},
+                'end': {'dateTime': '', 'timeZone': 'Asia/Shanghai'}}
+    baseweek = semstart + timedelta(weeks=weeknum - 1)
     clsday = int(eachcls['SKXQ'])
-    baseday = baseweek + timedelta(days=clsday-1)
-    start_j = int(eachcls['KSJC'])    # included
-    end_j = int(eachcls['JSJC'])      # included
+    baseday = baseweek + timedelta(days=clsday - 1)
+    start_j = int(eachcls['KSJC'])  # included
+    end_j = int(eachcls['JSJC'])  # included
     period = end_j - start_j
     # School Schedule Timetable
     # 1-4 Morning {8:30-10:10,10:30-12:10} 20MINS2REST
     # 5-8 Afternoon {14:00-15:40,16:00-17:40}
     # 9-10 Evening {19:00-20:40}
     # School Schedule Timetable
-    if start_j >= 5:     # afternoon
+    if start_j >= 5:  # afternoon
         # The classes in school has two forms in time: 45mins*2 / 45mins*3 / 45mins*4
         basetime = baseday + timedelta(hours=14)
         start_j = start_j - 5
@@ -79,28 +78,28 @@ def generate_time(eachcls, weeknum, semstart=semester_start):
             evnttime['end']['dateTime'] = str(endtime.isoformat())
         elif period == 3:
             evnttime['start']['datetime'] = str(basetime.isoformat())
-            endtime = basetime + timedelta(hours=3,minutes=40)
+            endtime = basetime + timedelta(hours=3, minutes=40)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
         elif period == 2 and start_j == 0:
             evnttime['start']['datetime'] = str(basetime.isoformat())
-            endtime = basetime + timedelta(minutes=45*3+20)
+            endtime = basetime + timedelta(minutes=45 * 3 + 20)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
         elif period == 2 and start_j == 1:
-            basetime = basetime +timedelta(minutes=55)
+            basetime = basetime + timedelta(minutes=55)
             evnttime['start']['datetime'] = str(basetime.isoformat())
-            endtime = basetime + timedelta(minutes=45*3+20)
+            endtime = basetime + timedelta(minutes=45 * 3 + 20)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
         else:
             sendlog_my(json.dumps(eachcls) + 'Import Failed!')
-    elif start_j ==9:    # evening
+    elif start_j == 9:  # evening
         basetime = baseday + timedelta(hours=19)
         evnttime['start']['datetime'] = str(basetime.isoformat())
         endtime = basetime + timedelta(minutes=100)
         evnttime['end']['dateTime'] = str(endtime.isoformat())
-    else:    # morning
-        basetime = baseday + timedelta(hours=8,minutes=30)
+    else:  # morning
+        basetime = baseday + timedelta(hours=8, minutes=30)
         start_j = start_j - 1
-        if period == 1 and start_j ==0:
+        if period == 1 and start_j == 0:
             evnttime['start']['datetime'] = str(basetime.isoformat())
             endtime = basetime + timedelta(minutes=100)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
@@ -125,27 +124,25 @@ def generate_time(eachcls, weeknum, semstart=semester_start):
             evnttime['end']['dateTime'] = str(endtime.isoformat())
         else:
             evnttime['start']['datetime'] = str(basetime.isoformat())
-            endtime = basetime + timedelta(hours=3,minutes=40)
+            endtime = basetime + timedelta(hours=3, minutes=40)
             evnttime['end']['dateTime'] = str(endtime.isoformat())
     return evnttime
 
 
-
-
-def generate_event(eachclass,weekno):
+def generate_event(eachclass, weekno):
     if eachclass['JASMC'] == None:
         eachclass['JASMC'] = '未安排地点'
     if eachclass['SKJS'] == None:
         eachclass['SKJS'] = '未安排教师'
     if eachclass['YPSJDD'] == None:
         eachclass['YPSJDD'] = '没有详细描述'
-    descd = eachclass['SKJS'] + eachclass['YPSJDD']
+    descd = eachclass['SKJS'] + ' ' + eachclass['YPSJDD']
     eventresc = {'summary': eachclass['KCM'],
-             'location': eachclass['JASMC'],
-             'description': descd,
-             'attendees':[{'email':mailacc}],
-             'reminders':{'useDefault': False,'overrides':[{'method':'popup', 'minutes': 30}]}}
-    eventtime = generate_time(eachclass,weekno)
+                 'location': eachclass['JASMC'],
+                 'description': descd,
+                 'attendees': [{'email': mailacc}],
+                 'reminders': {'useDefault': False, 'overrides': [{'method': 'popup', 'minutes': 30}]}}
+    eventtime = generate_time(eachclass, weekno)
     eventresc['start'] = eventtime['start']
     eventresc['end'] = eventtime['end']
     return eventresc
