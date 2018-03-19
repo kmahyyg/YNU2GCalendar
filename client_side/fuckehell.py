@@ -12,10 +12,10 @@ from selenium.webdriver.chrome.options import Options
 from .apikey import *
 from .sentry import *
 
-# chrome_options = Options()
-# chrome_options.add_argument("--headless")
-# driver = webdriver.Chrome(chrome_options=chrome_options)
-driver = webdriver.Chrome()
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=chrome_options)
+# driver = webdriver.Chrome()
 
 
 def getcookie():
