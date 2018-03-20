@@ -5,7 +5,7 @@ import random
 from urllib.parse import urlencode
 from uuid import uuid1 as uuidgen
 
-from .apikey import *
+from apikey import *
 
 
 def code_vergen():

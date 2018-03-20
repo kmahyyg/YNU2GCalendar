@@ -4,8 +4,8 @@
 import json
 from datetime import *
 
-from .apikey import semester_start, mailacc
-from .sentry import *
+from apikey import semester_start, mailacc
+from sentry import *
 
 # Firstly, Judge whether resp['code']=='0'
 # Then request one week per time, after that process to defined format.

@@ -3,7 +3,7 @@
 
 from raven import Client
 
-from .apikey import sentryid
+from apikey import sentryid
 
 client = Client(sentryid)
 

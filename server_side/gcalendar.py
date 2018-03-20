@@ -5,7 +5,7 @@ import json
 
 import requests
 
-from .sentry import *
+from sentry import *
 
 
 def getSeccalLst(acstoken):

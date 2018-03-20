@@ -8,7 +8,7 @@ from urllib.parse import urlencode
 
 import requests
 
-from .apikey import *
+from apikey import *
 
 
 def check_token_expire(token_time, g_authtoken):

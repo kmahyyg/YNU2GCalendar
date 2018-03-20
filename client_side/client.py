@@ -1,11 +1,11 @@
-# !/usr/bin/env python3
-# -*- encoding: utf-8 -*-
+#!/usr/bin/env python3
+#-*- encoding: utf-8 -*-
 
 # The client side is responsible for their class information and oauth authorization code
 
-from .fuckehell import *
-from .google_oauth import *
-from .sentry import *
+from fuckehell import *
+from google_oauth import *
+from sentry import *
 
 
 def postAuthToServ(datajson):

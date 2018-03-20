@@ -10,9 +10,9 @@ from time import *
 
 from flask import Flask, jsonify, request
 
-from .gcalendar import *
-from .google_oauth import *
-from .helljson_proc import *
+from gcalendar import *
+from google_oauth import *
+from helljson_proc import *
 
 app = Flask(__name__)
 
