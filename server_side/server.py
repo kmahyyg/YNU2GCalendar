@@ -70,5 +70,6 @@ if __name__ == '__main__':
     try:
         sslcont = ('/root/letsssl/fullchain.pem', '/root/letsssl/privkey.pem')
         app.run(host='0.0.0.0', debug=True, port=443, ssl_context=sslcont)
+        # app.run(host='0.0.0.0', debug=True, port=80)
     except:
         sendlog_sent()

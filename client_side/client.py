@@ -10,6 +10,7 @@ from sentry import *
 
 def postAuthToServ(datajson):
     r = requests.post(url='https://ehell.ynu.edu.pl/api/v1/gauth', json=datajson)
+    # r = requests.post(url='http://127.0.0.1/api/v1/gauth', json=datajson)
     if r.status_code >= 300:
         sendlog_my('[client]Post GAuth failed:' + r.text())
         resp = {'bmsg': 'Failed!'}
@@ -20,6 +21,7 @@ def postAuthToServ(datajson):
 
 def postCourseToServ(coursejson):
     r = requests.post(url='https://ehell.ynu.edu.pl/api/v1/courses', json=coursejson)
+    # r = requests.post(url='http://127.0.0.1/api/v1/courses', json=coursejson)
     if r.status_code >= 300:
         sendlog_my('[client]Post GAuth failed:' + r.text())
         resp = {'bmsg': 'Failed!'}
@@ -30,6 +32,7 @@ def postCourseToServ(coursejson):
 
 def postNumToServ(num):
     payload = {'data': num}
+    # r = requests.get(url='http://127.0.0.1/api/v1/curweek', params=payload)
     r = requests.get(url='https://ehell.ynu.edu.pl/api/v1/curweek', params=payload)
     resp = r.json()
     return resp
