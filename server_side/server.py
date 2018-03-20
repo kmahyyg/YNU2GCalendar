@@ -22,8 +22,6 @@ gauth_acstoken = ''
 gauth_reftoken = ''
 gauth_oauthtoken = ''
 acstokentime = 0
-
-
 # Constant Predefined
 
 
@@ -38,7 +36,7 @@ def procGauth():
         return jsonify({"code": 0, "bmsg": "Request successfully processed."})
     except:
         sendlog_sent()
-        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request@Gauth. Uploaded to Sentry.io"})
 
 
 @app.route('/api/v1/curweek', methods=['GET'])
@@ -48,7 +46,7 @@ def procWeeks():
         return jsonify({"code": 0, "bmsg": "200 Current Week OK"})
     except:
         sendlog_sent()
-        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request@curWeek. Uploaded to Sentry.io"})
 
 
 @app.route('/api/v1/courses', methods=['POST'])
@@ -65,7 +63,7 @@ def procCourses():
         return jsonify({"code": 0, "bmsg": "200 Courses data in this week proceeded."})
     except:
         sendlog_sent()
-        return jsonify({"code": 254, "bmsg": "400 Invalid Request. Uploaded to Sentry.io"})
+        return jsonify({"code": 254, "bmsg": "400 Invalid Request@courses. Uploaded to Sentry.io"})
 
 
 if __name__ == '__main__':
