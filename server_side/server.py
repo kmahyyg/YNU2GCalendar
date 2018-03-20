@@ -6,7 +6,7 @@ input("Accept? Press any key to continue.")
 # the server must process the json uploaded by the user and submit it to google server
 
 
-from time import *
+import time
 
 from flask import Flask, jsonify, request
 
@@ -29,7 +29,7 @@ acstokentime = 0
 def procGauth():
     try:
         gauth_authcode = request.get_json()
-        gauth_oauthtoken = get_oauth_token(gauth_authcode['authcode'], gcalapi)
+        gauth_oauthtoken = get_oauth_token(gauth_authcode, gcalapi)
         gauth_reftoken = gauth_oauthtoken['refresh_token']
         gauth_acstoken = gauth_oauthtoken['access_token']
         acstokentime = int(time.time())
