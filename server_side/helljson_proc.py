@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
+import json
+from datetime import *
+
 from .apikey import semester_start, mailacc
 from .sentry import *
-from datetime import *
-import json
 
 # Firstly, Judge whether resp['code']=='0'
 # Then request one week per time, after that process to defined format.

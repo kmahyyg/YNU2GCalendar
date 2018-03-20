@@ -6,13 +6,13 @@ input("Accept? Press any key to continue.")
 # the server must process the json uploaded by the user and submit it to google server
 
 
-from flask import Flask, abort, jsonify, request
-import json
 from time import *
+
+from flask import Flask, jsonify, request
+
+from .gcalendar import *
 from .google_oauth import *
 from .helljson_proc import *
-from .sentry import *
-from .gcalendar import *
 
 app = Flask(__name__)
 

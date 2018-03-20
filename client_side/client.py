@@ -3,11 +3,9 @@
 
 # The client side is responsible for their class information and oauth authorization code
 
-from .apikey import *
 from .fuckehell import *
 from .google_oauth import *
 from .sentry import *
-import requests, json
 
 
 def postAuthToServ(datajson):

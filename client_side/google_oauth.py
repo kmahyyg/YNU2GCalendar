@@ -2,8 +2,9 @@
 # -*- encoding: utf-8 -*-
 
 import random
-from uuid import uuid1 as uuidgen
 from urllib.parse import urlencode
+from uuid import uuid1 as uuidgen
+
 from .apikey import *
 
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
-from .apikey import sentryid
 from raven import Client
+
+from .apikey import sentryid
 
 client = Client(sentryid)
 
