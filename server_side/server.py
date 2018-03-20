@@ -22,6 +22,7 @@ gauth_acstoken = ''
 gauth_reftoken = ''
 gauth_oauthtoken = ''
 acstokentime = 0
+seccalid = ''
 # Constant Predefined
 
 
@@ -32,6 +33,9 @@ def procGauth():
         gauth_oauthtoken = get_oauth_token(gauth_authcode, gcalapi)
         gauth_reftoken = gauth_oauthtoken['refresh_token']
         gauth_acstoken = gauth_oauthtoken['access_token']
+        print(gauth_acstoken)
+        print(gauth_reftoken)
+        print(gauth_oauthtoken)
         acstokentime = int(time.time())
         return jsonify({"code": 0, "bmsg": "Request successfully processed."})
     except:
@@ -47,6 +51,13 @@ def procWeeks():
     except:
         sendlog_sent()
         return jsonify({"code": 254, "bmsg": "400 Invalid Request@curWeek. Uploaded to Sentry.io"})
+
+
+@app.route('/api/v1/createSecC',methods=['GET'])
+def newSecCalendar():
+    checkSec = getSeccalLst(gauth_acstoken)
+    seccalid = createSecCal(gauth_acstoken, checkSec)['id']
+    return jsonify({'code':0,'bmsg':'200 Create Secondary Calendar Processed.'})
 
 
 @app.route('/api/v1/courses', methods=['POST'])

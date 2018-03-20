@@ -6,6 +6,7 @@
 from fuckehell import *
 from google_oauth import *
 from sentry import *
+import requests
 
 
 def postAuthToServ(datajson):
@@ -38,6 +39,12 @@ def postNumToServ(num):
     return resp
 
 
+def getNewSecCal():
+    r = requests.get(url='https://ehell.ynu.edu.pl/api/v1/createSecC')
+    resp = r.json()
+    return resp
+
+
 def main():
     greeting = \
         '''
@@ -54,6 +61,7 @@ def main():
     ehall_ckie = getcookie()
     print("Ehall cookies emulate successfully finished!")
     totalweek = int(input("Please input the total weeks in this semester: ___"))
+    getNewSecCal()
     for i in range(1, totalweek + 1):
         cls = getclassjson(ehall_ckie, i)
         curwek = postNumToServ(i)
