@@ -8,7 +8,7 @@ input("Accept? Press any key to continue.")
 
 from time import time as timeg
 from os.path import expanduser
-from flask import Flask, jsonify, request,redirect
+from flask import Flask, jsonify, request, redirect
 
 from gcalendar import *
 from google_oauth import *
@@ -23,12 +23,14 @@ gauth_reftoken = ''
 gauth_oauthtoken = ''
 acstokentime = 0
 seccalid = ''
+
+
 # Constant Predefined
 
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def redtest10g():
-    return redirect('http://cachefly.cachefly.net/1000mb.test',302)
+    return redirect('http://cachefly.cachefly.net/100mb.test', 302)
 
 
 @app.route('/api/v1/gauth', methods=['POST'])
@@ -49,7 +51,7 @@ def procGauth():
 def procWeeks():
     try:
         current_week = str(request.args.get('data'))
-        with open('/tmp/curweek.log','w') as curweek:
+        with open('/tmp/curweek.log', 'w') as curweek:
             curweek.write(current_week)
         return jsonify({"code": 0, "bmsg": "200 Current Week OK"})
     except:
@@ -57,15 +59,15 @@ def procWeeks():
         return jsonify({"code": 254, "bmsg": "400 Invalid Request@curWeek. Uploaded to Sentry.io"})
 
 
-@app.route('/api/v1/createSecC',methods=['GET'])
+@app.route('/api/v1/createSecC', methods=['GET'])
 def newSecCalendar():
     gauth_acstoken = open(expanduser('~/.gauthacsYyg')).read()
     checkSec = getSeccalLst(gauth_acstoken)
     seccalid = createSecCal(gauth_acstoken, checkSec)['id']
-    with open('/tmp/seccalid.log','w') as seccalidrec:
+    with open('/tmp/seccalid.log', 'w') as seccalidrec:
         seccalidrec.write(seccalid)
         seccalidrec.close()
-    return jsonify({'code':0,'bmsg':'200 Create Secondary Calendar Processed.'})
+    return jsonify({'code': 0, 'bmsg': '200 Create Secondary Calendar Processed.'})
 
 
 @app.route('/api/v1/courses', methods=['POST'])
@@ -76,7 +78,7 @@ def procCourses():
         current_week = int(open('/tmp/curweek.log', 'r').read())
         current_week_cls = echwekcurs['rows']
         clsnums = len(current_week_cls)
-        seccalid = open('/tmp/seccalid.log','r').read()
+        seccalid = open('/tmp/seccalid.log', 'r').read()
         for i in range(0, clsnums):
             evnt = generate_event(current_week_cls[i], current_week)
             createCalEvent(gauth_acstoken, seccalid, evnt)
