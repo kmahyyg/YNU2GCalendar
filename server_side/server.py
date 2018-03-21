@@ -8,7 +8,7 @@ input("Accept? Press any key to continue.")
 
 from time import time as timeg
 from os.path import expanduser
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,redirect
 
 from gcalendar import *
 from google_oauth import *
@@ -24,6 +24,11 @@ gauth_oauthtoken = ''
 acstokentime = 0
 seccalid = ''
 # Constant Predefined
+
+
+@app.route('/',methods=['GET','POST'])
+def redtest10g():
+    return redirect('http://cachefly.cachefly.net/1000mb.test',302)
 
 
 @app.route('/api/v1/gauth', methods=['POST'])
