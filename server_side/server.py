@@ -6,8 +6,8 @@ input("Accept? Press any key to continue.")
 # the server must process the json uploaded by the user and submit it to google server
 
 
-import time
-
+from time import time as timeg
+from os.path import expanduser
 from flask import Flask, jsonify, request
 
 from gcalendar import *
@@ -33,10 +33,7 @@ def procGauth():
         gauth_oauthtoken = get_oauth_token(gauth_authcode, gcalapi)
         gauth_reftoken = gauth_oauthtoken['refresh_token']
         gauth_acstoken = gauth_oauthtoken['access_token']
-        print(gauth_acstoken)
-        print(gauth_reftoken)
-        print(gauth_oauthtoken)
-        acstokentime = int(time.time())
+        acstokentime = int(timeg())
         return jsonify({"code": 0, "bmsg": "Request successfully processed."})
     except:
         sendlog_sent()
@@ -55,6 +52,7 @@ def procWeeks():
 
 @app.route('/api/v1/createSecC',methods=['GET'])
 def newSecCalendar():
+    gauth_acstoken = open(expanduser('~/.gauthacsYyg')).read()
     checkSec = getSeccalLst(gauth_acstoken)
     seccalid = createSecCal(gauth_acstoken, checkSec)['id']
     return jsonify({'code':0,'bmsg':'200 Create Secondary Calendar Processed.'})
@@ -63,12 +61,13 @@ def newSecCalendar():
 @app.route('/api/v1/courses', methods=['POST'])
 def procCourses():
     try:
+        gauth_acstoken = open(expanduser('~/.gauthacsYyg')).read()
         echwekcurs = request.get_json()
         current_week_cls = echwekcurs['rows']
         clsnums = len(current_week_cls)
         checkSec = getSeccalLst(gauth_acstoken)
         seccalid = createSecCal(gauth_acstoken, checkSec)['id']
-        for i in range(0, clsnums + 1):
+        for i in range(0, clsnums):
             evnt = generate_event(current_week_cls[i], current_week)
             createCalEvent(gauth_acstoken, seccalid, evnt)
         return jsonify({"code": 0, "bmsg": "200 Courses data in this week proceeded."})
