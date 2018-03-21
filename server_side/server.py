@@ -43,7 +43,9 @@ def procGauth():
 @app.route('/api/v1/curweek', methods=['GET'])
 def procWeeks():
     try:
-        current_week = int(request.args.get('data'))
+        current_week = str(request.args.get('data'))
+        with open('/tmp/curweek.log','w') as curweek:
+            curweek.write(current_week)
         return jsonify({"code": 0, "bmsg": "200 Current Week OK"})
     except:
         sendlog_sent()
@@ -66,6 +68,7 @@ def procCourses():
     try:
         gauth_acstoken = open(expanduser('~/.gauthacsYyg')).read()
         echwekcurs = request.get_json()
+        current_week = int(open('/tmp/curweek.log', 'r').read())
         current_week_cls = echwekcurs['rows']
         clsnums = len(current_week_cls)
         seccalid = open('/tmp/seccalid.log','r').read()
