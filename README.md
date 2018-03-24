@@ -17,9 +17,9 @@ This program is proudly using Sentry.io Bug Tracker Service. If you chose my sof
 7. [EU Resident GDPR Protected](https://gdpr-info.eu/)
 
 
-# YNU2GCalendar
+# YNU2GCalendar with ICS
 
-Use Google Calendar API to convert YNU Classes to Google Calendar to make it more easier for students managing class.
+Use iCalendar format to convert YNU Classes to Google Calendar to make it much more easier for students managing class.
 
 # Ehell System
 
@@ -28,12 +28,10 @@ This system is written by WisEDU Co.,Ltd with an incredibly low-extensible frame
 
 # Idea
 
-Thanks to the future of human, Google provided a powerful calendar ReSTful API.
+Thanks to the future of human, Google provided a powerful calendar.
 As it always do, cooperating with my Pixel, It provided a useful and efficient notification and GTD system.
 
-Because of the existence of GFW and the poor connectivity of Ehell outside internal network, I finally rewrite it as C/S structure. 
-The client side will ask user to give permissions to their own Google Account and Ehell system for fetching courses data and create events.
-The server side will process the JSON file uploaded by user which contains authentication credentials and course info, then convert it to iCalendar format and add to your Google Calendar by creating events and a secondary calendar.
+Without any connection to the world, you can still use this package.
 
 Using At-A-Glance(R) Feature of Google Pixel Launcher will help you improve your productivity.
 The default event notification is Pop-up Notification at 30 minutes before it happened.
@@ -46,7 +44,6 @@ Licensed under AGPL V3.0
 
 Clone this repo to wherever you want first.
 Don't forget to modify apikey.py.example first.
-Register a Google Calendar API first. It's free to use.
 
 > **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
 
@@ -56,25 +53,11 @@ Register a Google Calendar API first. It's free to use.
 pip install -r ./requirements.txt
 cd client_side
 cp ./apikey.py.example ./apikey.py
-python3 ./main.py
+python3 ./client.py
 ```
 
-## Server side
-
-```sh
-pip install -r ./requirements.txt
-cd server_side
-cp ./apikey.py.example ./apikey.py
-# Update APT Source and install certbot to issue a SSL Cert
-sudo apt-get update -y
-sudo apt-get install certbot
-sudo certbot certonly --standalone
-# Now, you have a brand new SSL Cert issued by Let's encrypt
-sudo mkdir /root/letsssl
-sudo cp /etc/letsencrypt/live/yourdomain.com/fullchain.pem /root/letsssl/
-sudo cp /etc/letsencrypt/live/yourdomain.com/privkey.pem /root/letsssl/
-nohup python3 ./server.py > /dev/null 2>&1 &
-```
+After that, you should copy&paste the ynucal.ics file on your desktop folder to your phone.
+Then you can import this file to whichever calendar software you want.
 
 # Issues requirements
 
@@ -83,7 +66,7 @@ LOGCAT OR GTFO!
 Provide all of your logs and submit it via Issues. If the file is too large(or you cannot identify which is related one),
 please SHARE YOUR LOG via [Pastebin](http://pastebin.ubuntu.com) or [Hastebin](http://hastebin.com).
  
-If you don't follow those rules, your issue will get **no response and closed directly**.
+If you don't follow those rules and Issue template, your issue will get **no response and closed directly**.
 I will **NOT** receive(also reply) any request via any IM or Email.
 
 #### BTW
