@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 
-gcalapi = {}  # API Secret JSON downloaded from Google, its data part
+from datetime import datetime
 
-gcalapi_scope = 'https://www.googleapis.com/auth/calendar'  # Don't modify
+from pytz import timezone
+
+bjtz = timezone('Asia/Shanghai')
 sentryid = 'https://43b3b4ea4f724fda919fdfc7af178a25:d3ba0a16090041b592701abb106da138@sentry.io/297885'  # Don't modify
 ynu_ehell_name = ''  # Your EHALL SYSTEM Username
 ynu_ehell_password = ''  # Your EHALL SYSTEM Password
+semester_start = datetime(2018, 3, 5, 0, 0, 0, tzinfo=bjtz)  # Semester starts at
+mailacc = 'MAILTO:test@example.com'  # Your email account

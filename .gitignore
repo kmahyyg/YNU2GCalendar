@@ -6,6 +6,7 @@ package*.json
 .yygapi
 server_side/apikey.py
 client_side/apikey.py
+apikey.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -110,3 +111,4 @@ ENV/
 .mypy_cache/
 /client_side/apikey.py
 /server_side/apikey.py
+/apikey.py
