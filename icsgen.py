@@ -31,7 +31,7 @@ def crea_evnt(coursedic):
     evnt_desc = coursedic['description']
     evnt_loca = coursedic['location']
     evnt_start = coursedic['start']['dateTime']
-    evnt_stop = coursedic['stop']['dateTime']
+    evnt_stop = coursedic['end']['dateTime']
     evnt = Event()
     evnt.add('summary', evnt_summary)
     evnt.add('dtstart', evnt_start)

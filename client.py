@@ -21,13 +21,14 @@ def main():
     ehall_ckie = getcookie()
     ynucal = init_cal()
     print("Ehall cookies emulate successfully finished!")
-    totalweek = int(input("Please input the total weeks in this semester: ___"))
-
+    totalweek = input("Please input the total weeks in this semester: ___")
+    totalweek = int(totalweek)
     for i in range(1, totalweek + 1):
         cls = getclassjson(ehall_ckie, i)
+        allcls = cls['rows']
         print('Classes in Week ' + str(i) + ' is gotten.')
         try:
-            for j in cls:
+            for j in allcls:
                 evntresc = generate_event(j, i)
                 evntical = crea_evnt(evntresc)
                 ynucal = add_evnt(ynucal, evntical)
