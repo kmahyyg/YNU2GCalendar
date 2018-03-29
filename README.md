@@ -45,6 +45,8 @@ Licensed under AGPL V3.0
 Clone this repo to wherever you want first.
 Don't forget to modify apikey.py.example first.
 
+**Don't run it in a remote server, running on your local desktop**
+
 > **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
 
 ## Client side
@@ -52,6 +54,7 @@ Don't forget to modify apikey.py.example first.
 ```sh
 pip install -r ./requirements.txt
 cd client_side
+cp -a ./chromedriver /usr/bin/
 cp ./apikey.py.example ./apikey.py
 python3 ./client.py
 ```
