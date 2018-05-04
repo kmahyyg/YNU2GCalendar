@@ -4,62 +4,51 @@
 # This semester starts from Mar.3
 
 import time
-
 import requests
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
 from apikey import *
 from sentry import *
+from PIL import Image
+import sys
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=chrome_options)
+def getcaptcha(stuid):
+    curtime = str(int(time.time() * 1000))
+    base = 'http://ids.ynu.edu.cn/authserver/needCaptcha.html'
+    querydata = {'username':stuid,'_':curtime}
+    checkcapt = requests.get(base,data=querydata)
+    return checkcapt.text
 
-
-# driver = webdriver.Chrome()
+def captcha_recg(captcha):
+    # dependency: https://github.com/tesseract-ocr/tesseract
+    pass
 
 
 def getcookie():
-    driver.get(
-        'http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html')
-    username = driver.find_element_by_id("username")
-    username.send_keys(ynu_ehell_name)
-    passwd = driver.find_element_by_id("password")
-    passwd.send_keys(ynu_ehell_password)
-    loginbutton = driver.find_element_by_xpath('//*[@id="casLoginForm"]/p[4]/button')
-    loginbutton.submit()
-    if driver.title == '统一身份认证':
-        driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/div/div[2]/input[1]').click()
-        time.sleep(5)
-    if driver.title == '统一身份认证平台':
-        print('You may need to input the captcha yourself.')
-        sendlog_my("YNU2GCalendar: Meet CAPTCHA Test! <REWRITE BURNING!>")
-    if driver.title == '网上办事服务大厅':
-        time.sleep(8)
-        availapps = driver.find_element_by_xpath('//*[@id="ampPersonalAsideLeftTabHead"]/div[2]')
-        availapps.click()
-        myclasses = driver.find_element_by_xpath(
-            '//*[@id="ampPersonalAsideLeftAllCanUseAppsTabContent"]/div[1]/div[10]')  # may be changed in the future
-        currentWindow = driver.current_window_handle
-        myclasses.click()
-        for handle in driver.window_handles:
-            if handle != currentWindow:
-                driver.switch_to.window(driver.window_handles[1])
-        time.sleep(10)
-    else:
-        pass
+    curtime = str(int(time.time() * 1000))
+    sesslog = requests.Session()
+    loginpage = sesslog.get('http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html')
+    needcaptcha_status = getcaptcha(ynu_ehell_name)
+    if needcaptcha_status == 'true':
+        captimage = sesslog.get('http://ids.ynu.edu.cn/authserver/captcha.html',stream=True,allow_redirects=True)
+        autoornot = input("Do you want to use captcha recognition feature [EXPERIMENTAL]? (Y/N)")
+        if autoornot == 'N':
+            capimgsaved = open('tmpcapt.jpg','wb')
+            capimgsaved.write(captimage.content)
+            capimgsaved.close()
+            im = Image.open('tmpcapt.jpg')
+            im.show()
+            mancapt = input("Input the captcha here: ")
+        elif autoornot == 'Y':
+            if sys.platform == 'win32':
+                print("Sorry, currently this feature not supported on Windows.")
+                raise IOError
+            else:
+                # TODO: add auto recognition
+        else:
+            print("Illegal input!")
+            raise NotImplementedError
+    if needcaptcha_status == 'false':
+        pass # don't do anything.
 
-    if driver.title == '我的课程表':
-        time.sleep(10)
-        cookies_list = driver.get_cookies()
-        cookies_dict = {}
-        for cookie in cookies_list:
-            cookies_dict[cookie['name']] = cookie['value']
-        driver.quit()
-        return cookies_dict
-    else:
-        sendlog_my("YNU2GCalendar: Error to focus tab to Classes List")
 
 
 def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):

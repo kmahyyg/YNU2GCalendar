@@ -36,6 +36,9 @@ Without any connection to the world, you can still use this package.
 Using At-A-Glance(R) Feature of Google Pixel Launcher will help you improve your productivity.
 The default event notification is Pop-up Notification at 30 minutes before it happened.
 
+Captcha auto recognition is still an **experimental feature**. It relies on Google's [tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
+and also relies on xv or ImageMagick.
+
 # License
 
 Licensed under AGPL V3.0
@@ -47,13 +50,15 @@ Don't forget to modify apikey.py.example first.
 
 > **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
 
-## Client side
+## Run and Enjoy
 
-```sh
-pip install -r ./requirements.txt
-cd client_side
-cp ./apikey.py.example ./apikey.py
-python3 ./client.py
+```bash
+$ sudo pip install -r ./requirements.txt
+$ cd client_side
+$ sudo apt install tesseract-ocr
+$ sudo apt install libtesseract-dev
+$ cp ./apikey.py.example ./apikey.py
+$ python3 ./client.py
 ```
 
 After that, you should copy&paste the ynucal.ics file on your desktop folder to your phone.
