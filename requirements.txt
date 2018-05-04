@@ -13,6 +13,5 @@ python-dateutil==2.7.0
 pytz==2018.3
 raven==6.6.0
 requests==2.18.4
-selenium==3.9.0
 six==1.11.0
 urllib3==1.22
