@@ -5,49 +5,59 @@
 
 import time
 import requests
+from captcharecg import *
 from apikey import *
 from sentry import *
 from PIL import Image
 import sys
 
-def getcaptcha(stuid):
+def chkcaptcha4u(stuid):
     curtime = str(int(time.time() * 1000))
     base = 'http://ids.ynu.edu.cn/authserver/needCaptcha.html'
     querydata = {'username':stuid,'_':curtime}
     checkcapt = requests.get(base,data=querydata)
     return checkcapt.text
 
-def captcha_recg(captcha):
-    # dependency: https://github.com/tesseract-ocr/tesseract
-    pass
-
 
 def getcookie():
     curtime = str(int(time.time() * 1000))
     sesslog = requests.Session()
-    loginpage = sesslog.get('http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html')
-    needcaptcha_status = getcaptcha(ynu_ehell_name)
+    baseurl = 'http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html'
+    custom_header = {'Host': 'ids.ynu.edu.cn', 'Connection':'keep-alive', 'Pragma': 'no-cache',
+                     'Cache-Control': 'no-cache', 'Upgrade-Insecure-Requests': 1,
+                     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                     'DNT': 1, 'Referer': 'http://ehall.ynu.edu.cn/new/index.html', 'Accept-Encoding': 'gzip, deflate',
+                     'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6'}
+    loginpage = sesslog.get(baseurl,headers=custom_header)
+    needcaptcha_status = chkcaptcha4u(ynu_ehell_name)
     if needcaptcha_status == 'true':
         captimage = sesslog.get('http://ids.ynu.edu.cn/authserver/captcha.html',stream=True,allow_redirects=True)
         autoornot = input("Do you want to use captcha recognition feature [EXPERIMENTAL]? (Y/N)")
+        capimgsaved = open('tmpcapt.jpg', 'wb')
+        capimgsaved.write(captimage.content)
+        capimgsaved.close()
+        im = Image.open('tmpcapt.jpg')
         if autoornot == 'N':
-            capimgsaved = open('tmpcapt.jpg','wb')
-            capimgsaved.write(captimage.content)
-            capimgsaved.close()
-            im = Image.open('tmpcapt.jpg')
             im.show()
             mancapt = input("Input the captcha here: ")
         elif autoornot == 'Y':
             if sys.platform == 'win32':
-                print("Sorry, currently this feature not supported on Windows.")
-                raise IOError
+                print("Sorry, currently this feature not supported on Windows. Welcome PR.")
             else:
-                # TODO: add auto recognition
+                mancapt = captcha_recg(im)
+                ask4user = input("Correct?(Y/N) The captcha read by machine is: " + str(mancapt))
+                if ask4user == 'N':
+                    ask4user = input('Input the correct one here: ')
+                else:
+                    pass
         else:
             print("Illegal input!")
             raise NotImplementedError
     if needcaptcha_status == 'false':
         pass # don't do anything.
+    # Captcha done
+    # TODO: Start autologin
 
 
 
