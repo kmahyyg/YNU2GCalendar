@@ -8,8 +8,7 @@ import requests
 from captcharecg import *
 from apikey import *
 from sentry import *
-from PIL import Image
-import sys
+from parseloginpg import *
 
 
 def chkcaptcha4u(stuid):
@@ -25,10 +24,10 @@ def getcookie():
     sesslog = requests.Session()
     baseurl = 'http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html'
     custom_header = {'Host': 'ids.ynu.edu.cn', 'Connection':'keep-alive', 'Pragma': 'no-cache',
-                     'Cache-Control': 'no-cache', 'Upgrade-Insecure-Requests': 1,
+                     'Cache-Control': 'no-cache', 'Upgrade-Insecure-Requests': '1',
                      'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
                      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-                     'DNT': 1, 'Referer': 'http://ehall.ynu.edu.cn/new/index.html', 'Accept-Encoding': 'gzip, deflate',
+                     'DNT': '1', 'Referer': 'http://ehall.ynu.edu.cn/new/index.html', 'Accept-Encoding': 'gzip, deflate',
                      'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6'}
     loginpage = sesslog.get(baseurl,headers=custom_header)
     # check whether captcha is indeed or not
@@ -37,9 +36,11 @@ def getcookie():
         captopt = getcaptcha(sesslog)    # auto recognize or manually input
     if needcaptcha_status == 'false':
         pass # don't do anything.
-    # TODO: parse webpage and get a hidden input form
-    # TODO: after that: start auto login
-
+    # parse webpage and get a hidden input form
+    pagehidtags = getpagecont(loginpage)
+    loginform = hidden_form2dict(pagehidtags)
+    # TODO: start auto login
+    # TODO: post login form and FOLLOW REDIRECTS!
 
 
 def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
