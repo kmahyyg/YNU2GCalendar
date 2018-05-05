@@ -42,6 +42,7 @@ def main():
     imgcapt = Image.open('testcap.jpg')
     optseccode = str(imgpreproc(imgcapt))
     optseccode = optseccode.replace(' ','')
+    optseccode = optseccode.replace('><','X')
     print('After Process, Possible: '+ optseccode)
     corre = confirm_correct()
     if isinstance(corre,bool):
@@ -57,4 +58,4 @@ if __name__ == '__main__':
     print('Correct:' + str(correctence.count(1)) + '/100')
 
 
-    # TEST RESULT:  65/100 CORRECT! X and >< cannot be correctly recogized!
+    # TEST RESULT:  70/100 CORRECT!
