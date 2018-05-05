@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- encoding:utf-8 -*-
 
+from PIL import Image
 import pytesseract
+import sys
 
 def imgpreproc(imgobj):
     imgobj = imgobj.convert('L')
@@ -23,3 +25,32 @@ def captcha_recg(imgcapt):
     optseccode = optseccode.replace(' ','')
     optseccode = optseccode.replace('><','X')
     return optseccode
+
+
+def getcaptcha(sesslog):
+    captimage = sesslog.get('http://ids.ynu.edu.cn/authserver/captcha.html', stream=True, allow_redirects=True)
+    autoornot = input("Do you want to use captcha recognition feature [EXPERIMENTAL]? (Y/N)")
+    capimgsaved = open('tmpcapt.jpg', 'wb')
+    capimgsaved.write(captimage.content)
+    capimgsaved.close()
+    im = Image.open('tmpcapt.jpg')
+    if autoornot == 'N':
+        im.show()
+        mancapt = input("Input the captcha here: ")
+        return mancapt
+    elif autoornot == 'Y':
+        if sys.platform == 'win32':
+            print("Sorry, currently this feature not supported on Windows. Welcome PR.")
+            mancapt = input("Input the captcha here: ")
+            return mancapt
+        else:
+            mancapt = captcha_recg(im)
+            ask4user = input("Correct?(Y/N) The captcha read by machine is: " + str(mancapt))
+            if ask4user == 'N':
+                ask4user = input('Input the correct one here: ')
+                return ask4user
+            else:
+                return mancapt
+    else:
+        print("Illegal input!")
+        raise NotImplementedError
