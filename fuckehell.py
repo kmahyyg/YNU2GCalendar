@@ -35,12 +35,22 @@ def getcookie():
     if needcaptcha_status == 'true':
         captopt = getcaptcha(sesslog)    # auto recognize or manually input
     if needcaptcha_status == 'false':
-        pass # don't do anything.
+        captopt = None # don't do anything.
     # parse webpage and get a hidden input form
     pagehidtags = getpagecont(loginpage)
     loginform = hidden_form2dict(pagehidtags)
+    if needcaptcha_status == 'true' and captopt != None:
+        loginform['captchaResponse'] = captopt
     # TODO: start auto login
     # TODO: post login form and FOLLOW REDIRECTS!
+    # proceed single login
+    singlelog = input("Have you ever enabled single log-on?(Y/N)")
+    if singlelog == 'Y':
+        singlogdt = {'execution':'e1s6','_eventId': 'Continue'}
+        lpcont = sesslog.get(baseurl)
+    else:
+        pass
+    # don't want to process re-auth as a secondary auth, cuz it is disabled in default.
 
 
 def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
