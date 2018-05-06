@@ -16,7 +16,10 @@ def chkcaptcha4u(stuid):
     base = 'http://ids.ynu.edu.cn/authserver/needCaptcha.html'
     querydata = {'username':stuid,'_':curtime}
     checkcapt = requests.get(base,data=querydata)
-    return checkcapt.text
+    result = str(checkcapt.text)
+    result = result.replace('\n','')
+    return result
+
 
 
 def getcookie():
@@ -41,16 +44,27 @@ def getcookie():
     loginform = hidden_form2dict(pagehidtags)
     if needcaptcha_status == 'true' and captopt != None:
         loginform['captchaResponse'] = captopt
-    # TODO: start auto login
-    # TODO: post login form and FOLLOW REDIRECTS!
+    # auto login
+    loginnow = sesslog.post(baseurl,data=loginform,allow_redirects=True)
+    # post login form and FOLLOW REDIRECTS DONE!
+    # TODO: get redirected url and get the ticket value
     # proceed single login
+    #                 <form method="post" id="continue">
+    #                     <input type="hidden" name="execution" value="e1s2"/>
+    #                     <input type="hidden" name="_eventId" value="continue"/>
+    #                 </form>
+    # TODO: perform a test here
     singlelog = input("Have you ever enabled single log-on?(Y/N)")
     if singlelog == 'Y':
         singlogdt = {'execution':'e1s6','_eventId': 'Continue'}
-        lpcont = sesslog.get(baseurl)
+        lpcont = sesslog.get(baseurl,allow_redirects=True)
     else:
         pass
     # don't want to process re-auth as a secondary auth, cuz it is disabled in default.
+    # go to ehall index page
+    idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html',stream=True)
+    goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218',allow_redirects=True,stream=True,timeout=40)
+    return sesslog.cookies.get_dict()
 
 
 def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
