@@ -40,8 +40,17 @@ def getcaptcha(sesslog):
         return mancapt
     elif autoornot == 'Y':
         if sys.platform == 'win32':
-            print("Sorry, currently this feature not supported on Windows. Welcome PR.")
-            mancapt = input("Input the captcha here: ")
+            print("Currently, this feature is **NOT STABLE AND NOT TESTED** on Windows.")
+            print('See https://github.com/tesseract-ocr/tesseract/wiki#windows to install dependency first.')
+            win_confirm = input("Do you still want to continue and installed the dependency in need? (Y/N)")
+            if win_confirm == 'Y':
+                mancapt = captcha_recg(im)
+                ask4user = input("Correct?(Y/N) The captcha read by machine is: " + str(mancapt))
+                if ask4user == 'N':
+                    ask4user = input('Input the correct one here: ')
+                    return ask4user
+            else:
+                mancapt = input("Input the captcha here: ")
             return mancapt
         else:
             mancapt = captcha_recg(im)

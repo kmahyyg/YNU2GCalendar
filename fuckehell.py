@@ -36,6 +36,10 @@ def getcookie():
     # check whether captcha is indeed or not
     needcaptcha_status = chkcaptcha4u(ynu_ehell_name)
     if needcaptcha_status == 'true':
+        print("-------------")
+        print("Please ensure that your account name and password is correct in apikey.py first.")
+        print("If not, terminate this program directly and correct it now.")
+        print("-------------")
         captopt = getcaptcha(sesslog)    # auto recognize or manually input
     if needcaptcha_status == 'false':
         captopt = None # don't do anything.

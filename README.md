@@ -39,6 +39,10 @@ Licensed under AGPL V3.0
 Clone this repo to wherever you want first.
 Don't forget to modify apikey.py.example first.
 
+My captcha recognition feature is using Tesseract OCR by Google Inc.
+It works smoothly on Linux, if you are using Windows and still want to experience this feature, check here first:
+https://github.com/tesseract-ocr/tesseract/wiki#windows
+
 > **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
 
 ## Run and Enjoy
