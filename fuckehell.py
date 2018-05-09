@@ -47,7 +47,6 @@ def getcookie():
     # auto login
     loginnow = sesslog.post(baseurl,data=loginform,allow_redirects=True)
     # post login form and FOLLOW REDIRECTS DONE!
-    # TODO: get redirected url and get the ticket value
     # proceed single login
     #                 <form method="post" id="continue">
     #                     <input type="hidden" name="execution" value="e1s2"/>
@@ -56,7 +55,7 @@ def getcookie():
     # TODO: perform a test here
     singlelog = input("Have you ever enabled single log-on?(Y/N)")
     if singlelog == 'Y':
-        singlogdt = {'execution':'e1s6','_eventId': 'Continue'}
+        # TODO: prase to get a hidden input form to continue
         lpcont = sesslog.get(baseurl,allow_redirects=True)
     else:
         pass
@@ -64,6 +63,8 @@ def getcookie():
     # go to ehall index page
     idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html',stream=True)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218',allow_redirects=True,stream=True,timeout=40)
+    # succeed to login and got the correct cookie
+        # TODO: generate a userClientID , amp.locale = undefined and then s.cookies.set(DICT)
     return sesslog.cookies.get_dict()
 
 
