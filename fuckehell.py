@@ -46,25 +46,18 @@ def getcookie():
         loginform['captchaResponse'] = captopt
     # auto login
     loginnow = sesslog.post(baseurl,data=loginform,allow_redirects=True)
-    # post login form and FOLLOW REDIRECTS DONE!
-    # proceed single login
-    #                 <form method="post" id="continue">
-    #                     <input type="hidden" name="execution" value="e1s2"/>
-    #                     <input type="hidden" name="_eventId" value="continue"/>
-    #                 </form>
-    # TODO: perform a test here
-    singlelog = input("Have you ever enabled single log-on?(Y/N)")
-    if singlelog == 'Y':
-        # TODO: prase to get a hidden input form to continue
-        lpcont = sesslog.get(baseurl,allow_redirects=True)
-    else:
-        pass
-    # don't want to process re-auth as a secondary auth, cuz it is disabled in default.
     # go to ehall index page
     idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html',stream=True)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218',allow_redirects=True,stream=True,timeout=40)
     # succeed to login and got the correct cookie
-        # TODO: generate a userClientID , amp.locale = undefined and then s.cookies.set(DICT)
+    # -------- Original JS Implementation --------
+    # rdmstring += Math.random().toString(36).substr(2)  (LENGTH 20)
+    # userClientId = new Date().getTime() + "" + CommonUtil.createRandomNum();
+    # amp.locale = undefined and then s.cookies.set(DICT)
+    # --------------------- END ------------------
+    extra_cookies = {'amp.locale':'undefined'}
+    extra_cookies['userClientId'] = genUserClientId()
+    sesslog.cookies.set(extra_cookies)
     return sesslog.cookies.get_dict()
 
 

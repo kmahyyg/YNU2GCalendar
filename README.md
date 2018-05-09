@@ -7,15 +7,6 @@ This program should **NOT** be used for any illegal purpose. All source code mus
 Your sensitive data will **NOT** be stored in our server after you finished all your operations.
 We will not leak any of your data to any third-party service provider.
 
-This program is proudly using Sentry.io Bug Tracker Service. If you chose my software, I recognized you already accepted:
-1. [GNU AFFERO GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/agpl-3.0-standalone.html)
-2. Other related Open-source dependencies license
-3. [Sentry.io Privacy Policy](https://sentry.io/legal/privacy/1.0.0/)
-4. [Sentry.io Privacy Shield](https://www.privacyshield.gov/participant?id=a2zt0000000TNDzAAO)
-5. [Sentry.io DPA](https://sentry.io/security/#data-seurity-and-privacy)
-6. [Sentry.io Security&Compliance](https://sentry.io/security/#data-seurity-and-privacy)
-7. [EU Resident GDPR Protected](https://gdpr-info.eu/)
-
 
 # YNU2GCalendar with ICS
 
@@ -33,11 +24,11 @@ As it always do, cooperating with my Pixel, It provided a useful and efficient n
 
 Without any connection to the world, you can still use this package.
 
-Using At-A-Glance(R) Feature of Google Pixel Launcher will help you improve your productivity.
+Using At-A-Glance(C) Feature of Google Pixel Launcher will help you improve your productivity.
 The default event notification is Pop-up Notification at 30 minutes before it happened.
 
 Captcha auto recognition is still an **experimental feature**. It relies on Google's [tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
-and also relies on xv or ImageMagick.
+and also relies on ```xv``` or ```ImageMagick```.
 
 # License
 
@@ -53,11 +44,12 @@ Don't forget to modify apikey.py.example first.
 ## Run and Enjoy
 
 ```bash
+$ git clone https://github.com/kmahyyg/ynu2gcalendar.git
 $ sudo pip install -r ./requirements.txt
-$ cd client_side
 $ sudo apt install tesseract-ocr
 $ sudo apt install libtesseract-dev
 $ cp ./apikey.py.example ./apikey.py
+$ vi ./apikey.py
 $ python3 ./client.py
 ```
 
@@ -73,7 +65,3 @@ please SHARE YOUR LOG via [Pastebin](http://pastebin.ubuntu.com) or [Hastebin](h
  
 If you don't follow those rules and Issue template, your issue will get **no response and closed directly**.
 I will **NOT** receive(also reply) any request via any IM or Email.
-
-#### BTW
-
-Google has a very strong standard applied. While I'm programming for this, It all followed the corresponding international standard.
