@@ -50,6 +50,9 @@ def getcookie():
         loginform['captchaResponse'] = captopt
     # auto login
     loginnow = sesslog.post(baseurl,data=loginform,allow_redirects=True)
+    usrclid = genUserClientId()
+    sesslog.cookies.set('amp.locale', 'undefined')
+    sesslog.cookies.set('userClientId', usrclid)
     # go to ehall index page
     idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html',stream=True)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218',allow_redirects=True,stream=True,timeout=40)
@@ -59,9 +62,6 @@ def getcookie():
     # userClientId = new Date().getTime() + "" + CommonUtil.createRandomNum();
     # amp.locale = undefined and then s.cookies.set(DICT)
     # --------------------- END ------------------
-    extra_cookies = {'amp.locale':'undefined'}
-    extra_cookies['userClientId'] = genUserClientId()
-    sesslog.cookies.set(extra_cookies)
     return sesslog.cookies.get_dict()
 
 
