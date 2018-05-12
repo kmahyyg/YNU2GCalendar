@@ -7,10 +7,51 @@ This program should **NOT** be used for any illegal purpose. All source code mus
 Your sensitive data will **NOT** be stored in our server after you finished all your operations.
 We will not leak any of your data to any third-party service provider.
 
-
 # YNU2GCalendar with ICS
 
-Use iCalendar format to convert YNU Classes to Google Calendar to make it much more easier for students managing class.
+Use iCalendar format(RFC5545) to convert YNU Classes to Google Calendar to make it much more easier for students managing class.
+
+# Installation and Deployment
+
+Clone this repo to wherever you want first.
+Don't forget to modify apikey.py.example first.
+
+My captcha recognition feature is using Tesseract OCR by Google Inc.
+It works smoothly on Linux, if you are using Windows and still want to experience this feature, check here first:
+https://github.com/tesseract-ocr/tesseract/wiki#windows
+
+> **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
+
+## Run and Enjoy
+
+Linux:
+
+```bash
+$ git clone https://github.com/kmahyyg/ynu2gcalendar.git
+$ sudo pip install -r ./requirements.txt
+$ sudo apt install tesseract-ocr
+$ sudo apt install libtesseract-dev
+$ cp ./apikey.py.example ./apikey.py
+$ vi ./apikey.py
+$ python3 ./client.py
+```
+
+After that, you should copy&paste the ynucal.ics file on your desktop folder to your phone.
+Then you can import this file to whichever calendar software you want.
+
+If you're using **Windows**, just clone this repo and then run `python -m pip install -r requirements.txt` to install
+dependencies and after that, give the correct value to `apikey.py.example` and then rename it to `apikey.py`,
+finally run `client.py` .
+
+# MIUI User Please read this
+
+Because the system calendar and its backend is modified heavily by MIUI, the *.ics file cannot import even you install a
+Google Calendar. The solution is create a new shared local account on your phone and download another app to parse this
+file. The app you may need is here: [Play Store Link](https://play.google.com/store/apps/details?id=tk.drlue.icalimportexport)
+
+# PR Welcome
+
+Need someone to convert it into a web service. (Frontend + Backend)
 
 # Ehell System
 
@@ -33,32 +74,6 @@ and also relies on ```xv``` or ```ImageMagick```.
 # License
 
 Licensed under AGPL V3.0
-
-# Installation and Deployment
-
-Clone this repo to wherever you want first.
-Don't forget to modify apikey.py.example first.
-
-My captcha recognition feature is using Tesseract OCR by Google Inc.
-It works smoothly on Linux, if you are using Windows and still want to experience this feature, check here first:
-https://github.com/tesseract-ocr/tesseract/wiki#windows
-
-> **If you want to have a more detailed support, please don't modify ```sentryid``` in apikey.py.example**
-
-## Run and Enjoy
-
-```bash
-$ git clone https://github.com/kmahyyg/ynu2gcalendar.git
-$ sudo pip install -r ./requirements.txt
-$ sudo apt install tesseract-ocr
-$ sudo apt install libtesseract-dev
-$ cp ./apikey.py.example ./apikey.py
-$ vi ./apikey.py
-$ python3 ./client.py
-```
-
-After that, you should copy&paste the ynucal.ics file on your desktop folder to your phone.
-Then you can import this file to whichever calendar software you want.
 
 # Issues requirements
 
