@@ -65,7 +65,7 @@ def getcookie():
     return sesslog.cookies.get_dict()
 
 
-def getclassjson(cookies_dict, weeknum, term='2017-2018-1'):
+def getclassjson(cookies_dict, weeknum, term='2017-2018-2'):
     url = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do'
     custom_header = {'Host': 'ehall.ynu.edu.cn', 'Connection': 'keep-alive', 'Content-Length': '25',
                      'Pragma': 'no-cache',

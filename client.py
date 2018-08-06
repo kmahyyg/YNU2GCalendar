@@ -24,7 +24,7 @@ def main():
     totalweek = input("Please input the total weeks in this semester: ___")
     totalweek = int(totalweek)
     for i in range(1, totalweek + 1):
-        cls = getclassjson(ehall_ckie, i)
+        cls = getclassjson(ehall_ckie, i, '2017-2018-2')
         allcls = cls['rows']
         print('Classes in Week ' + str(i) + ' is gotten.')
         try:
