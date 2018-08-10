@@ -1,7 +1,7 @@
 pytz
 pytesseract
 icalendar
-PIL
+pillow
 requests
 beautifulsoup4
 raven
