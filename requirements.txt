@@ -5,3 +5,4 @@ pillow
 requests
 beautifulsoup4
 raven
+lxml

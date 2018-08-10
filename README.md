@@ -31,8 +31,6 @@ $ git clone https://github.com/kmahyyg/ynu2gcalendar.git
 $ sudo pip install -r ./requirements.txt
 $ sudo apt install tesseract-ocr
 $ sudo apt install libtesseract-dev
-$ cp ./apikey.py.example ./apikey.py
-$ vi ./apikey.py
 $ python3 ./client.py
 ```
 
@@ -40,8 +38,7 @@ After that, you should copy&paste the ynucal.ics file on your desktop folder to 
 Then you can import this file to whichever calendar software you want.
 
 If you're using **Windows**, just clone this repo and then run `python -m pip install -r requirements.txt` to install
-dependencies and after that, give the correct value to `apikey.py.example` and then rename it to `apikey.py`,
-finally run `client.py` .
+dependencies and after that, run `client.py` .
 
 # MIUI User Please read this
 
