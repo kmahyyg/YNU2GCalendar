@@ -51,7 +51,7 @@ def crea_evnt(coursedic):
 
 
 def export2f(cal):
-    directory = os.path.expanduser('~/Desktop/ynucal.ics')
+    directory = str(os.getcwd()) + '/ynucal.ics'
     f = open(directory, 'wb')
     f.write(cal.to_ical())
     f.close()

@@ -35,7 +35,7 @@ alarm['TRIGGER'] = vText('-PT30M')
 alarm.add("DESCRIPTION", "xxxx At xxxx after xxx")
 evnt.add_component(alarm)
 cal.add_component(evnt)
-directory = os.path.expanduser('~/Desktop/temp.ics')
+directory = str(os.getcwd()) + '/ynucal.ics'
 f = open(directory, 'wb')
 f.write(cal.to_ical())
 f.close()
