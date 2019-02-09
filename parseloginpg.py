@@ -4,6 +4,7 @@
 from bs4 import BeautifulSoup
 from apikey import *
 
+
 def getpagecont(session_getobj):
     pagecont = session_getobj.text.encode()
     soup = BeautifulSoup(pagecont, 'lxml')

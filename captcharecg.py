@@ -5,6 +5,7 @@ from PIL import Image
 import pytesseract
 import sys
 
+
 def imgpreproc(imgobj):
     imgobj = imgobj.convert('L')
     threshold = 125
@@ -14,7 +15,7 @@ def imgpreproc(imgobj):
             table.append(0)
         else:
             table.append(1)
-    imgobj = imgobj.point(table,'1')
+    imgobj = imgobj.point(table, '1')
     imgobj.show()
     opt_seccode = pytesseract.image_to_string(imgobj)
     return opt_seccode
@@ -22,8 +23,8 @@ def imgpreproc(imgobj):
 
 def captcha_recg(imgcapt):
     optseccode = str(imgpreproc(imgcapt))
-    optseccode = optseccode.replace(' ','')
-    optseccode = optseccode.replace('><','X')
+    optseccode = optseccode.replace(' ', '')
+    optseccode = optseccode.replace('><', 'X')
     return optseccode
 
 
