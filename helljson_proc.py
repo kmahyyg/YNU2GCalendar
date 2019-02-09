@@ -64,7 +64,7 @@ def generate_time(eachcls, weeknum, semstart=semester_start):
     # 5-8 Afternoon {14:00-15:40,16:00-17:40}
     # 9-10 Evening {19:00-20:40}
     # School Schedule Timetable
-    if start_j >= 5 and start_j <9:  # afternoon
+    if start_j >= 5 and start_j < 9:  # afternoon
         # The classes in school has two forms in time: 45mins*2 / 45mins*3 / 45mins*4
         basetime = baseday + timedelta(hours=14)
         start_j = start_j - 5
