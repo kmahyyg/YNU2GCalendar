@@ -15,7 +15,7 @@ def chkcaptcha4u(stuid):
     curtime = str(int(time.time() * 1000))
     base = 'http://ids.ynu.edu.cn/authserver/needCaptcha.html'
     querydata = {'username': stuid, '_': curtime}
-    checkcapt = requests.get(base, data=querydata, timeout=10)
+    checkcapt = requests.get(base, data=querydata, timeout=25)
     result = str(checkcapt.text)
     result = result.replace('\n', '')
     return result
@@ -32,7 +32,7 @@ def getcookie():
                      'DNT': '1', 'Referer': 'http://ehall.ynu.edu.cn/new/index.html',
                      'Accept-Encoding': 'gzip, deflate',
                      'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6'}
-    loginpage = sesslog.get(baseurl, headers=custom_header, timeout=10)
+    loginpage = sesslog.get(baseurl, headers=custom_header, timeout=25)
     # check whether captcha is indeed or not
     needcaptcha_status = chkcaptcha4u(ynu_ehell_name)
     if needcaptcha_status == 'true':
@@ -49,12 +49,12 @@ def getcookie():
     if needcaptcha_status == 'true' and captopt != None:
         loginform['captchaResponse'] = captopt
     # auto login
-    loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True)
+    loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True, timeout=25)
     usrclid = genUserClientId()
     sesslog.cookies.set('amp.locale', 'undefined')
     sesslog.cookies.set('userClientId', usrclid)
     # go to ehall index page
-    idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html', stream=True)
+    idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html', stream=True, timeout=25)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218', allow_redirects=True,
                                stream=True, timeout=40)
     # succeed to login and got the correct cookie
@@ -77,7 +77,7 @@ def getclassjson(cookies_dict, weeknum, term):
                      'Referer': 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/*default/index.do?amp_sec_version_=1',
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
     formdata = {'XNXQDM': term, 'SKZC': weeknum}
-    r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict)
+    r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict, timeout=25)
     try:
         classes = r.json()
         classes['datas']['xskcb']['WEEKNO'] = weeknum
