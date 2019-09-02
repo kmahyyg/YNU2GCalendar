@@ -9,6 +9,12 @@ from captcharecg import *
 from apikey import *
 from parseloginpg import *
 
+proxies = {
+  'http': 'http://127.0.0.1:65500',
+  'https': 'http://127.0.0.1:65500',
+}
+IS_DEBUG = False
+
 
 def chkcaptcha4u(stuid):
     curtime = str(int(time.time() * 1000))
@@ -23,7 +29,7 @@ def chkcaptcha4u(stuid):
 def getcookie():
     # start a new session to record info we need
     sesslog = requests.Session()
-    baseurl = 'http://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html'
+    baseurl = 'https://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html'
     custom_header = {'Host': 'ids.ynu.edu.cn', 'Connection': 'keep-alive', 'Pragma': 'no-cache',
                      'Cache-Control': 'no-cache', 'Upgrade-Insecure-Requests': '1',
                      'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
@@ -48,7 +54,11 @@ def getcookie():
     if needcaptcha_status == 'true' and captopt != None:
         loginform['captchaResponse'] = captopt
     # auto login
-    loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True, timeout=25)
+    if IS_DEBUG:
+        loginnow = sesslog.post(baseurl, verify=False, data=loginform, allow_redirects=True, timeout=25, proxies=proxies)
+    else:
+        loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True, timeout=25)
+
     usrclid = genUserClientId()
     sesslog.cookies.set('amp.locale', 'undefined')
     sesslog.cookies.set('userClientId', usrclid)

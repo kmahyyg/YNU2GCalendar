@@ -6,6 +6,7 @@ from apikey import *
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from base64 import b64encode
+from urllib.parse import quote_plus as urlencode
 
 
 def getpagecont(session_getobj):
@@ -16,12 +17,12 @@ def getpagecont(session_getobj):
 
 
 def randstrgen(length):
-    from random import choice as randch
+    from random import random
     rds_base = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
-    # rds_baselen = len(rds_base)
+    rds_baselen = len(rds_base)
     result = ''
     for i in range(length):
-        result += randch(rds_base)
+        result += rds_base[int(random() * rds_baselen)]
     return result
 
 
@@ -36,7 +37,7 @@ def encryptPasswd(curr_pwd, websalt):
     key = websalt.encode()
     iv = randstrgen(16).encode()
     cipher = AES.new(key=key, mode=AES.MODE_CBC, iv=iv)
-    ciptext = cipher.encrypt(pad(data, AES.block_size))
+    ciptext = cipher.encrypt(pad(data, AES.block_size, style='pkcs7'))
     result = b64encode(ciptext).decode('utf-8')
     return result
 
