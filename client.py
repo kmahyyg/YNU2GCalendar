@@ -6,14 +6,14 @@
 from fuckehell import *
 from helljson_proc import *
 from icsgen import *
-from apikey import current_term
+
 import logging
 from apikey import sentryid
 import sentry_sdk
 from sentry_sdk.integrations import excepthook
 from sentry_sdk.integrations.logging import LoggingIntegration
 sentry_logging = LoggingIntegration(
-    level=logging.DEBUG,        # Capture debug and above as breadcrumbs
+    level=logging.INFO,        # Capture debug and above as breadcrumbs
     event_level=logging.ERROR  # Send errors as events
 )
 sentry_sdk.init(sentryid, integrations=[excepthook.ExcepthookIntegration(always_run=True), sentry_logging])
@@ -37,7 +37,7 @@ def main():
     totalweek = input("Please input the total weeks in this semester: ")
     totalweek = int(totalweek)
     for i in range(1, totalweek + 1):
-        cls = getclassjson(ehall_ckie, i, current_term)
+        cls = getclassjson(ehall_ckie, i)
         allcls = cls['rows']
         print('Classes in Week ' + str(i) + ' are gotten.')
         try:
