@@ -3,6 +3,9 @@
 
 from bs4 import BeautifulSoup
 from apikey import *
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from base64 import b64encode
 
 
 def getpagecont(session_getobj):
@@ -12,14 +15,46 @@ def getpagecont(session_getobj):
     return hidden_tags
 
 
+def randstrgen(length):
+    from random import choice as randch
+    rds_base = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+    # rds_baselen = len(rds_base)
+    result = ''
+    for i in range(length):
+        result += randch(rds_base)
+    return result
+
+
+def encryptPasswd(curr_pwd, websalt):
+    # AES-128-CBC-PKCS7, which was default pad of pycryptodome
+    # Data = _randomstring(length=64 bytes) + data
+    # Key = P1 (salt, 16 bytes)
+    # IV = _randomstring (16 bytes)
+    # After encryption, base64 encoded
+    data = randstrgen(64) + curr_pwd
+    data = data.encode()
+    key = websalt.encode()
+    iv = randstrgen(16).encode()
+    cipher = AES.new(key=key, mode=AES.MODE_CBC, iv=iv)
+    ciptext = cipher.encrypt(pad(data, AES.block_size))
+    result = b64encode(ciptext).decode('utf-8')
+    return result
+
+
 def hidden_form2dict(hidden_tags):
     formdata = {}
     for i in hidden_tags:
-        nm = i['name']
-        valus = i['value']
-        formdata[nm] = valus
+        try:
+            nm = i['name']
+            valus = i['value']
+            formdata[nm] = valus
+        except NameError:
+            nm = i['id']
+            valus = i['value']
+            formdata[nm] = valus
     formdata['username'] = ynu_ehell_name
-    formdata['password'] = ynu_ehell_password
+    formdata['password'] = encryptPasswd(ynu_ehell_password, formdata['pwdDefaultEncryptSalt'])
+    formdata.pop('pwdDefaultEncryptSalt', None)
     return formdata
 
 

@@ -4,5 +4,6 @@ icalendar
 pillow
 requests
 beautifulsoup4
-raven
+sentry_sdk
+pycryptodome
 lxml
