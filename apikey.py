@@ -7,7 +7,7 @@ from pytz import timezone
 
 # semester sign
 
-current_term = '2018-2019-1'
+current_term = '2018-2019-2'
 
 # hardcoded
 bjtz = timezone('Asia/Shanghai')
