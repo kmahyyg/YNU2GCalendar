@@ -87,7 +87,7 @@ def getclassjson(cookies_dict, weeknum):
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
     # BELOW: REQUEST TERM
     term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
-    term_r = requests.post(url=term_req, headers=custom_headerm, cookies=cookies_dict, timeout=25)
+    term_r = requests.post(url=term_req, headers=custom_header, cookies=cookies_dict, timeout=25, allow_redirects=True)
     resp_term = term_r.json()
     if resp_term["code"] == "0":
         try:
