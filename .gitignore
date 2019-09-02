@@ -4,6 +4,7 @@ node_modules/
 package*.json
 .idea/
 .yygapi
+*.ics
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
