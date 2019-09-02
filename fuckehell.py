@@ -75,7 +75,7 @@ def getcookie():
     return sesslog.cookies.get_dict()
 
 
-def getclassjson(cookies_dict, weeknum, term):
+def getclassjson(cookies_dict, weeknum):
     url = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do'
     custom_header = {'Host': 'ehall.ynu.edu.cn', 'Connection': 'keep-alive', 'Content-Length': '25',
                      'Pragma': 'no-cache',
@@ -85,6 +85,19 @@ def getclassjson(cookies_dict, weeknum, term):
                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                      'Referer': 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/*default/index.do?amp_sec_version_=1',
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
+    # BELOW: REQUEST TERM
+    term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
+    term_r = requests.post(url=term_req, headers=custom_headerm, cookies=cookies_dict, timeout=25)
+    resp_term = term_r.json()
+    if resp_term["code"] == "0":
+        try:
+            term = resp_term["datas"]["dqxnxq"]["rows"][0]["DM"]
+            print("Current Semester, Get: ", end='')
+            print(resp_term["datas"]["dqxnxq"]["rows"][0]["MC"], end='')
+            print(" " + term)
+        except NameError:
+            raise OSError("Can't find current semester sign.")
+    # BELOW: REQUEST COURSE TABLE
     formdata = {'XNXQDM': term, 'SKZC': weeknum}
     r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict, timeout=25)
     try:

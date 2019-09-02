@@ -5,10 +5,6 @@ from datetime import datetime
 
 from pytz import timezone
 
-# semester sign
-
-current_term = '2018-2019-2'
-
 # hardcoded
 bjtz = timezone('Asia/Shanghai')
 sentryid = 'https://43b3b4ea4f724fda919fdfc7af178a25:d3ba0a16090041b592701abb106da138@sentry.io/297885'  # Don't modify
