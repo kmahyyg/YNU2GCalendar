@@ -48,7 +48,7 @@ def hidden_form2dict(hidden_tags):
             nm = i['name']
             valus = i['value']
             formdata[nm] = valus
-        except NameError:
+        except KeyError:
             nm = i['id']
             valus = i['value']
             formdata[nm] = valus
