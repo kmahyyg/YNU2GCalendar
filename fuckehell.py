@@ -7,7 +7,6 @@ import time
 import requests
 from captcharecg import *
 from apikey import *
-from sentry import *
 from parseloginpg import *
 
 
@@ -84,8 +83,6 @@ def getclassjson(cookies_dict, weeknum, term):
         if classes['code'] == '0':
             return classes['datas']['xskcb']
         else:
-            return sendlog_my("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
+            raise OSError("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
     except:
-        sendlog_sent()
-        sendlog_my("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")
-        return 254
+        raise OSError("YNU2Gcalendar: Cookies get, but Failed to fetch class table data.")

@@ -6,9 +6,21 @@
 from fuckehell import *
 from helljson_proc import *
 from icsgen import *
-from sentry import sendlog_sent
 from apikey import current_term
+import logging
+from apikey import sentryid
+import sentry_sdk
+from sentry_sdk.integrations import excepthook
+from sentry_sdk.integrations.logging import LoggingIntegration
+sentry_logging = LoggingIntegration(
+    level=logging.DEBUG,        # Capture debug and above as breadcrumbs
+    event_level=logging.ERROR  # Send errors as events
+)
+sentry_sdk.init(sentryid, integrations=[excepthook.ExcepthookIntegration(always_run=True), sentry_logging])
 
+
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s | %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 def main():
     greeting = \
@@ -34,8 +46,7 @@ def main():
                 evntical = crea_evnt(evntresc)
                 ynucal = add_evnt(ynucal, evntical)
         except:
-            print("You may encounter a problem due to unstable network connection in YNU, try again later.")
-            sendlog_sent()
+            raise OSError("You may encounter a problem due to unstable network connection in YNU, try again later.")
     export2f(ynucal)
     print('Export successfully finished.')
     return 0
