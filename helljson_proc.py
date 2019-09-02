@@ -3,9 +3,7 @@
 
 import json
 from datetime import *
-
 from apikey import semester_start
-from sentry import *
 
 # Firstly, Judge whether resp['code']=='0'
 # Then request one week per time, after that process to defined format.
@@ -91,7 +89,7 @@ def generate_time(eachcls, weeknum, semstart=semester_start):
             endtime = basetime + timedelta(minutes=45 * 3 + 20)
             evnttime['end']['dateTime'] = endtime
         else:
-            sendlog_my(json.dumps(eachcls) + 'Import Failed!')
+            raise OSError(json.dumps(eachcls) + 'Import Failed!')
     elif start_j == 9:  # evening
         basetime = baseday + timedelta(hours=19)
         evnttime['start']['dateTime'] = basetime
