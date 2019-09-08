@@ -29,7 +29,7 @@ def captcha_recg(imgcapt):
 
 
 def getcaptcha(sesslog):
-    captimage = sesslog.get('http://ids.ynu.edu.cn/authserver/captcha.html', stream=True, allow_redirects=True)
+    captimage = sesslog.get('https://ids.ynu.edu.cn/authserver/captcha.html', stream=True, allow_redirects=True)
     autoornot = input("Do you want to use captcha recognition feature [EXPERIMENTAL]? (Y/N)")
     capimgsaved = open('tmpcapt.jpg', 'wb')
     capimgsaved.write(captimage.content)

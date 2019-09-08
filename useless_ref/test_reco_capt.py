@@ -35,7 +35,7 @@ def confirm_correct():
 
 
 def main():
-    captimage = requests.get('http://ids.ynu.edu.cn/authserver/captcha.html', stream=True, allow_redirects=True)
+    captimage = requests.get('https://ids.ynu.edu.cn/authserver/captcha.html', stream=True, allow_redirects=True)
     capimgsaved = open('testcap.jpg', 'wb')
     capimgsaved.write(captimage.content)
     capimgsaved.close()
