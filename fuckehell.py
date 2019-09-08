@@ -15,7 +15,6 @@ proxies_dbg = {
 }
 
 
-
 def chkcaptcha4u(stuid):
     curtime = str(int(time.time() * 1000))
     base = 'https://ids.ynu.edu.cn/authserver/needCaptcha.html'
