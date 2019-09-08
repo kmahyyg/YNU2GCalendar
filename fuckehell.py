@@ -9,11 +9,11 @@ from captcharecg import *
 from apikey import *
 from parseloginpg import *
 
-proxies = {
+proxies_dbg = {
   'http': 'http://127.0.0.1:42779',
   'https': 'http://127.0.0.1:42779',
 }
-IS_DEBUG = True
+
 
 
 def chkcaptcha4u(stuid):
@@ -54,27 +54,23 @@ def getcookie():
     if needcaptcha_status == 'true' and captopt != None:
         loginform['captchaResponse'] = captopt
     # auto login
-    if IS_DEBUG:
-        loginnow = sesslog.post(baseurl, verify=False, data=loginform, allow_redirects=True, timeout=25, proxies=proxies)
-    else:
-        loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True, timeout=25)
-
+    loginnow = sesslog.post(baseurl, data=loginform, allow_redirects=True, timeout=25)
     usrclid = genUserClientId()
     sesslog.cookies.set('amp.locale', 'undefined')
     sesslog.cookies.set('userClientId', usrclid)
     # go to ehall index page
-    idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html', stream=True, timeout=25, proxies=proxies)
+    idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html', stream=True, timeout=25)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218', allow_redirects=True,
-                               stream=True, timeout=40, proxies=proxies)
+                               stream=True, timeout=40)
     # 20190909: update: choose group
     curtime = str(int(time.time() * 1000))
     getgroupurl = 'http://ehall.ynu.edu.cn/appMultiGroupEntranceList?r_t={}&appId=4770397878132218&param='.format(str(curtime))
-    groupdata = sesslog.get(getgroupurl, timeout=25, allow_redirects=False, stream=True, proxies=proxies).json()
+    groupdata = sesslog.get(getgroupurl, timeout=25, allow_redirects=False, stream=True).json()
     if groupdata['result'] == 'success' and groupdata['hasLogin']:
         targeturl = groupdata['data']['groupList'][-1]['targetUrl']
-        sesslog.get(targeturl, timeout=25, allow_redirects=True, stream=True, proxies=proxies)
+        sesslog.get(targeturl, timeout=25, allow_redirects=True, stream=True)
     sesslog.get('http://ehall.ynu.edu.cn/jwapp/sys/emappagelog/config/wdkb.do', timeout=25,
-                allow_redirects=True, stream=True, proxies=proxies)
+                allow_redirects=True, stream=True)
     # succeed to login and got the correct cookie
     # -------- Original JS Implementation --------
     # rdmstring += Math.random().toString(36).substr(2)  (LENGTH 20)
@@ -97,7 +93,7 @@ def getclassjson(loginsession, weeknum):
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
     # BELOW: REQUEST TERM
     term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
-    term_r = loginsession.post(url=term_req, allow_redirects=True, timeout=25, proxies=proxies)
+    term_r = loginsession.post(url=term_req, allow_redirects=True, timeout=25)
     resp_term = term_r.json()
     if resp_term["code"] == "0":
         try:
@@ -109,7 +105,7 @@ def getclassjson(loginsession, weeknum):
             raise OSError("Can't find current semester sign.")
     # BELOW: REQUEST COURSE TABLE
     formdata = {'XNXQDM': term, 'SKZC': weeknum}
-    r = loginsession.post(url=url, data=formdata, headers=custom_header, timeout=25, proxies=proxies)
+    r = loginsession.post(url=url, data=formdata, headers=custom_header, timeout=25)
     try:
         classes = r.json()
         classes['datas']['xskcb']['WEEKNO'] = weeknum
