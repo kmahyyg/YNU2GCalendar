@@ -51,7 +51,8 @@ def crea_evnt(coursedic):
 
 
 def export2f(cal):
-    directory = str(os.getcwd()) + '/ynucal.ics'
+    from secrets import token_urlsafe
+    directory = str(os.getcwd()) + '/ynucal_{}.ics'.format(token_urlsafe(10))
     f = open(directory, 'wb')
     f.write(cal.to_ical())
     f.close()
