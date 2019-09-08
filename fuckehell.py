@@ -10,10 +10,10 @@ from apikey import *
 from parseloginpg import *
 
 proxies = {
-  'http': 'http://127.0.0.1:65500',
-  'https': 'http://127.0.0.1:65500',
+  'http': 'http://127.0.0.1:42779',
+  'https': 'http://127.0.0.1:42779',
 }
-IS_DEBUG = False
+IS_DEBUG = True
 
 
 def chkcaptcha4u(stuid):
@@ -66,16 +66,26 @@ def getcookie():
     idxpage_ehall = sesslog.get('http://ehall.ynu.edu.cn/new/index.html', stream=True, timeout=25)
     goto_myclass = sesslog.get('http://ehall.ynu.edu.cn/appShow?appId=4770397878132218', allow_redirects=True,
                                stream=True, timeout=40)
+    # 20190909: update: choose group
+    curtime = str(int(time.time() * 1000))
+    getgroupurl = 'http://ehall.ynu.edu.cn/appMultiGroupEntranceList?r_t={}&appId=4770397878132218&param='.format(str(curtime))
+    groupdata = sesslog.get(getgroupurl, timeout=25, allow_redirects=False, stream=True).json()
+    if groupdata['result'] == 'success' and groupdata['hasLogin']:
+        targeturl = groupdata['data']['groupList'][-1]['targetUrl']
+        sesslog.get(targeturl, timeout=25, allow_redirects=True, stream=True)
+    sesslog.get('http://ehall.ynu.edu.cn/jwapp/sys/emappagelog/config/wdkb.do', timeout=25,
+                allow_redirects=True, stream=True)
     # succeed to login and got the correct cookie
     # -------- Original JS Implementation --------
     # rdmstring += Math.random().toString(36).substr(2)  (LENGTH 20)
     # userClientId = new Date().getTime() + "" + CommonUtil.createRandomNum();
     # amp.locale = undefined and then s.cookies.set(DICT)
     # --------------------- END ------------------
-    return sesslog.cookies.get_dict()
+    return sesslog
 
 
-def getclassjson(cookies_dict, weeknum):
+def getclassjson(loginsession, weeknum):
+
     url = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do'
     custom_header = {'Host': 'ehall.ynu.edu.cn', 'Connection': 'keep-alive', 'Content-Length': '25',
                      'Pragma': 'no-cache',
@@ -87,7 +97,7 @@ def getclassjson(cookies_dict, weeknum):
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
     # BELOW: REQUEST TERM
     term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
-    term_r = requests.post(url=term_req, headers=custom_header, cookies=cookies_dict, timeout=25, allow_redirects=True)
+    term_r = loginsession.get(url=term_req, headers=custom_header, timeout=25, allow_redirects=True)
     resp_term = term_r.json()
     if resp_term["code"] == "0":
         try:
@@ -99,7 +109,7 @@ def getclassjson(cookies_dict, weeknum):
             raise OSError("Can't find current semester sign.")
     # BELOW: REQUEST COURSE TABLE
     formdata = {'XNXQDM': term, 'SKZC': weeknum}
-    r = requests.post(url=url, data=formdata, headers=custom_header, cookies=cookies_dict, timeout=25)
+    r = loginsession.post(url=url, data=formdata, headers=custom_header, timeout=25)
     try:
         classes = r.json()
         classes['datas']['xskcb']['WEEKNO'] = weeknum
