@@ -32,7 +32,7 @@ def getcookie():
     baseurl = 'https://ids.ynu.edu.cn/authserver/login?service=http%3A%2F%2Fehall.ynu.edu.cn%2Flogin%3Fservice%3Dhttp%3A%2F%2Fehall.ynu.edu.cn%2Fnew%2Findex.html'
     custom_header = {'Host': 'ids.ynu.edu.cn', 'Connection': 'keep-alive', 'Pragma': 'no-cache',
                      'Cache-Control': 'no-cache', 'Upgrade-Insecure-Requests': '1',
-                     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+                     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3325.181 Safari/537.36',
                      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
                      'DNT': '1', 'Referer': 'http://ehall.ynu.edu.cn/new/index.html',
                      'Accept-Encoding': 'gzip, deflate',
@@ -91,13 +91,13 @@ def getclassjson(loginsession, weeknum):
                      'Pragma': 'no-cache',
                      'Cache-Control': 'no-cache', 'Accept': 'application/json, text/javascript, */*; q=0.01',
                      'Origin': 'http://ehall.ynu.edu.cn', 'X-Requested-With': 'XMLHttpRequest',
-                     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+                     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3239.132 Safari/537.36',
                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                      'Referer': 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/*default/index.do?amp_sec_version_=1',
                      'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'}
     # BELOW: REQUEST TERM
     term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
-    term_r = loginsession.get(url=term_req, headers=custom_header, timeout=25, allow_redirects=True, proxies=proxies)
+    term_r = loginsession.post(url=term_req, allow_redirects=True, proxies=proxies)
     resp_term = term_r.json()
     if resp_term["code"] == "0":
         try:
