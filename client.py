@@ -8,19 +8,19 @@ from helljson_proc import *
 from icsgen import *
 
 import logging
-# from apikey import sentryid
-# import sentry_sdk
-# from sentry_sdk.integrations import excepthook
-# from sentry_sdk.integrations.logging import LoggingIntegration
-# sentry_logging = LoggingIntegration(
-#     level=logging.INFO,        # Capture debug and above as breadcrumbs
-#     event_level=logging.ERROR  # Send errors as events
-# )
-# sentry_sdk.init(sentryid, integrations=[excepthook.ExcepthookIntegration(always_run=True), sentry_logging])
-
+from apikey import sentryid
+import sentry_sdk
+from sentry_sdk.integrations import excepthook
+from sentry_sdk.integrations.logging import LoggingIntegration
+sentry_logging = LoggingIntegration(
+    level=logging.INFO,        # Capture debug and above as breadcrumbs
+    event_level=logging.ERROR  # Send errors as events
+)
+sentry_sdk.init(sentryid, integrations=[excepthook.ExcepthookIntegration(always_run=True), sentry_logging])
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s | %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
+
 
 def main():
     greeting = \
