@@ -18,7 +18,7 @@ IS_DEBUG = False
 
 def chkcaptcha4u(stuid):
     curtime = str(int(time.time() * 1000))
-    base = 'http://ids.ynu.edu.cn/authserver/needCaptcha.html'
+    base = 'https://ids.ynu.edu.cn/authserver/needCaptcha.html'
     querydata = {'username': stuid, '_': curtime}
     checkcapt = requests.get(base, data=querydata, timeout=25)
     result = str(checkcapt.text)
