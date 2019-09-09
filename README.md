@@ -1,5 +1,5 @@
 ![AGPL](https://img.shields.io/github/license/kmahyyg/YNU2GCalendar.svg)
-![Python](https://img.shields.io/badge/Python-3.5%2B-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.6%2B-blue.svg)
 
 # Disclaimer
 
@@ -9,12 +9,11 @@ We will not leak any of your data to any third-party service provider.
 
 # YNU2GCalendar with ICS
 
-Use iCalendar format(RFC5545) to convert YNU Classes to Google Calendar to make it much more easier for students managing class.
+Use iCalendar format (RFC5545) to convert YNU Classes to Google Calendar to make it much more easier for students managing class.
 
 # Installation and Deployment
 
 Clone this repo to wherever you want first.
-Don't forget to modify apikey.py.example first.
 
 My captcha recognition feature is using Tesseract OCR by Google Inc.
 It works smoothly on Linux, if you are using Windows and still want to experience this feature, check here first:
@@ -24,20 +23,22 @@ https://github.com/tesseract-ocr/tesseract/wiki#windows
 
 ## Run and Enjoy
 
-Linux:
+Debian-Based Linux:
 
 ```bash
 $ git clone https://github.com/kmahyyg/ynu2gcalendar.git
 $ sudo pip install -r ./requirements.txt
-$ sudo apt install tesseract-ocr
-$ sudo apt install libtesseract-dev
+$ sudo apt install tesseract-ocr  # Optional
+$ sudo apt install libtesseract-dev  # Optional
 $ python3 ./client.py
 ```
+
+Arch-Based Linux: Since you're using Arch, I assume you have ability to install dependencies in a more Arch way and after that, just run `python3 ./client.py`.
 
 After that, you should copy&paste the ynucal.ics file on your desktop folder to your phone.
 Then you can import this file to whichever calendar software you want.
 
-If you're using **Windows**, just clone this repo and then run `python -m pip install -r requirements.txt` to install
+If you're using **Windows**, just clone this repo and then run `C:\Python3-x64\python.exe -m pip install -r requirements.txt` to install
 dependencies and after that, run `client.py` .
 
 # MIUI User Please read this
@@ -45,10 +46,6 @@ dependencies and after that, run `client.py` .
 Because the system calendar and its backend is modified heavily by MIUI, the *.ics file cannot import even you install a
 Google Calendar. The solution is create a new shared local account on your phone and download another app to parse this
 file. The app you may need is here: [Play Store Link](https://play.google.com/store/apps/details?id=tk.drlue.icalimportexport)
-
-# PR Welcome
-
-Need someone to convert it into a web service. (Frontend + Backend)
 
 # Ehell System
 
