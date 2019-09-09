@@ -27,7 +27,7 @@ Debian-Based Linux:
 
 ```bash
 $ git clone https://github.com/kmahyyg/ynu2gcalendar.git
-$ sudo pip install -r ./requirements.txt
+$ sudo pip3 install -r ./requirements.txt
 $ sudo apt install tesseract-ocr  # Optional
 $ sudo apt install libtesseract-dev  # Optional
 $ python3 ./client.py
