@@ -82,6 +82,3 @@ def genUserClientId():
     ranStr = genRandomString(20)
     userCliID = str(curTimeStamp) + str(ranStr)
     return userCliID
-
-
-def 
