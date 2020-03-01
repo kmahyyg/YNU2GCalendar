@@ -80,7 +80,6 @@ def getcookie():
 
 
 def getclassjson(loginsession, weeknum):
-
     url = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do'
     custom_header = {'Host': 'ehall.ynu.edu.cn', 'Connection': 'keep-alive', 'Content-Length': '25',
                      'Pragma': 'no-cache',
@@ -94,7 +93,7 @@ def getclassjson(loginsession, weeknum):
     term_req = 'http://ehall.ynu.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do'
     term_r = loginsession.post(url=term_req, allow_redirects=True, timeout=25)
     resp_term = term_r.json()
-    if resp_term["code"] == "0":
+    if resp_term["code"] == "0" and not custom_term :
         try:
             term = resp_term["datas"]["dqxnxq"]["rows"][0]["DM"]
             print("Current Semester, Get: ", end='')
@@ -102,6 +101,10 @@ def getclassjson(loginsession, weeknum):
             print(" " + term)
         except NameError:
             raise OSError("Can't find current semester sign.")
+    elif custom_term and len(custom_termstr) != 0:
+        term = custom_termstr
+    else:
+        raise IOError("Settings is not correct.")
     # BELOW: REQUEST COURSE TABLE
     formdata = {'XNXQDM': term, 'SKZC': weeknum}
     r = loginsession.post(url=url, data=formdata, headers=custom_header, timeout=25)

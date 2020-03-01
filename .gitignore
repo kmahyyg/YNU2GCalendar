@@ -110,3 +110,5 @@ ENV/
 
 # vscode
 .vscode/
+
+apikey.py
