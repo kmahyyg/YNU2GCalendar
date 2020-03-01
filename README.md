@@ -1,6 +1,8 @@
 ![AGPL](https://img.shields.io/github/license/kmahyyg/YNU2GCalendar.svg)
 ![Python](https://img.shields.io/badge/Python-3.6%2B-blue.svg)
 
+**Note: Currently, the WISEDU developped a disgusting Android APP called CPDaily to make this come true. But I don't recommend to use their app, since it's huge and contains a lot of useless feature with Proprietary Code. From their design and in-app content, I feel unsafe to use it.    (2020.03.02 By Patrick Young)**
+
 # Disclaimer
 
 This program should **NOT** be used for any illegal purpose. All source code must be used under AGPL-V3.
@@ -59,7 +61,7 @@ As it always do, cooperating with my Pixel, It provided a useful and efficient n
 
 Without any connection to the world, you can still use this package.
 
-Using At-A-Glance(C) Feature of Google Pixel Launcher will help you improve your productivity.
+Using At-A-Glance(C) Feature of LawnChair v2 Launcher will help you improve your productivity.
 The default event notification is Pop-up Notification at 30 minutes before it happened.
 
 Captcha auto recognition is still an **experimental feature**. It relies on Google's [tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
